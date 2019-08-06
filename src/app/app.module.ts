@@ -22,15 +22,22 @@ import { MenuItemCreateComponent } from './components/menuItem-create/menuItem-c
 import { HelloComponent } from './hello.component';
 
 @NgModule({
-  imports:      [ 
-    BrowserModule, 
-    FormsModule,
-    AppRoutingModule
-    ],
   declarations: [ 
     AppComponent,
     OrderDetailComponent,
     MenuListComponent, OrderListComponent, MenuItemCreateComponent
+    ],
+  imports:      [ 
+    BrowserModule,
+    AngularFireModule.initializeApp(environment.firebaseConfig),
+    AngularFirestoreModule,
+    BrowserAnimationsModule,
+    AppRoutingModule,
+    FormsModule,
+    MatFormFieldModule, MatTableModule, MatIconModule,
+    MatInputModule, MatOptionModule, MatSelectModule,
+    ToastrModule.forRoot(),
+    HttpClientModule
     ],
   exports: [AppRoutingModule],   
   bootstrap:    [ AppComponent ]

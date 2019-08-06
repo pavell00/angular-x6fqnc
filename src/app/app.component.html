@@ -1,4 +1,18 @@
-<hello name="{{ name }}"></hello>
-<p>
-  Start editing to see some magic happen :)
-</p>
+<!--The content below is only a placeholder and can be replaced.-->
+<div style="text-align:center">
+  <h3>
+    Welcome to {{ title }}!
+  </h3>
+
+  <div>
+    <a [routerLink]="['/order-list']">Список Заказов</a>
+    <a [routerLink]="['/order-detail']">Создание заказа</a>
+    <a [routerLink]="['/menu-list']">Работа с меню</a>
+  </div>
+<!--T<div class="example-container">
+    <mat-form-field>
+      <textarea matInput rows="20" placeholder="Textarea" value="{{myCheck}}"></textarea>
+    </mat-form-field>
+  </div>-->
+
+<router-outlet></router-outlet>

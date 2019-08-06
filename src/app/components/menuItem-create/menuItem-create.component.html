@@ -5,38 +5,22 @@
           <input matInput type="hidden" placeholder="id" [(ngModel)]="service.formData.id" >
       </mat-form-field>
       <mat-form-field>
-          <input matInput placeholder="Name food" value="" [(ngModel)]="service.formData.name">
+          <input matInput placeholder="Name food" value="" [(ngModel)]="service.formData.name" class="form-control">
       </mat-form-field>
       <mat-form-field>
-          <input matInput placeholder="Price of food"  type="number" [(ngModel)]="price">
+          <input matInput placeholder="Price of food"  type="number" [(ngModel)]="service.formData.price" class="form-control">
       </mat-form-field>
       <mat-form-field>
-          <input matInput placeholder="Quantity of food" type="number" [(ngModel)]="qty">
+          <input matInput placeholder="Quantity of food" type="number" [(ngModel)]="service.formData.qty" class="form-control">
       </mat-form-field>
       <mat-form-field>
-          <input matInput placeholder="Discount" type="number" [(ngModel)]="discount" min="0" max="50">
+          <input matInput placeholder="Discount" type="number" [(ngModel)]="service.formData.discount" min="0" max="50" class="form-control">
       </mat-form-field>
-  </div>
-</form>
-
-  <div class="form-group">
-    <input name="fullName" #fullName="ngModel" [(ngModel)]="service.formData.fullName" class="form-control" placeholder="Full name" required>
-
-  </div>
-  <div class="form-group">
-    <input name="position" #position="ngModel" [(ngModel)]="service.formData.position" class="form-control" placeholder="Position">
-  </div>
-  <div class="form-row">
-    <div class="form-group col-md-6">
-      <input name="empCode" #empCode="ngModel" [(ngModel)]="service.formData.empCode" class="form-control" placeholder="Emp. code">
-    </div>
-    <div class="form-group  col-md-6">
-      <input name="mobile" #mobile="ngModel" [(ngModel)]="service.formData.mobile" class="form-control" placeholder="Mobile">
-    </div>
   </div>
   <div class="form-group">
     <button type="submit" [disabled]="form.invalid" class="btn btn-lg btn-block btn-info">SUBMIT</button>
   </div>
+</form>
 
 <!--<i class="material-icons md-18">face</i>
 <i class="material-icons md-18">save</i>-->

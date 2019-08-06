@@ -44,10 +44,10 @@ export class MenuItemCreateComponent implements OnInit {
       form.resetForm();
       this.dataService.formData = {
       id: null,
-      fullName: '',
-      position: '',
-      empCode: '',
-      mobile: '',
+      name: '',
+      price: 10,
+      qty: 1,
+      discount: 0,
     }
   }
 }

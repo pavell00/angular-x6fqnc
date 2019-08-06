@@ -15,7 +15,7 @@ import { AngularFireDatabase, AngularFireObject } from '@angular/fire/database';
 export class DataService {
 
   dataUrl = '';
-  formData: menuItem;
+  public formData: menuItem;
   
   obsArray: BehaviorSubject<any[]> = new BehaviorSubject<any[]>([]);
   items: Observable<Order[]> = this.obsArray.asObservable();

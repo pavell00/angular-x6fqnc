@@ -1,0 +1,7 @@
+table {
+    width: -webkit-fill-available;
+}
+
+table.table-hover tbody tr:hover{
+    cursor: pointer;
+}

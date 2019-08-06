@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpResponse, HttpParams } from '@angular/common/http';
 
 import { Order } from '../models/order';
+import { menuItem } from '../models/menuItem';
 import { Observable, from, BehaviorSubject } from 'rxjs';
 import { distinct, flatMap, map, take, max} from 'rxjs/operators';
 

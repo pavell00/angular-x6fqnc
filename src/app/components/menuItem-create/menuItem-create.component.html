@@ -1,0 +1,33 @@
+<h3>create new Menu elemet</h3>
+
+<div>
+    <mat-form-field>
+        <input matInput placeholder="id" [(ngModel)]="id" >
+    </mat-form-field>
+    <mat-form-field>
+        <input matInput placeholder="Name food" value="" [(ngModel)]="name">
+    </mat-form-field>
+    <mat-form-field>
+        <input matInput placeholder="Price of food"  type="number" [(ngModel)]="price">
+    </mat-form-field>
+    <mat-form-field>
+        <input matInput placeholder="Quantity of food" type="number" [(ngModel)]="qty">
+    </mat-form-field>
+    <mat-form-field>
+        <input matInput placeholder="Discount" type="number" [(ngModel)]="discount" min="0" max="50">
+    </mat-form-field>
+</div>
+
+<a mat-mini-fab [routerLink]="['/phrases']">
+    <mat-icon>arrow_back</mat-icon>
+</a>
+<a mat-mini-fab (click)="addPhrase()">
+        <mat-icon>add</mat-icon>
+</a>
+<a mat-mini-fab (click)="getMaxId()">
+    <mat-icon>done</mat-icon>
+</a>
+
+<!--<i class="material-icons md-18">face</i>
+<i class="material-icons md-18">save</i>-->
+<!--<img [src]="assets/images/twotone_save_black_18dp.png">-->

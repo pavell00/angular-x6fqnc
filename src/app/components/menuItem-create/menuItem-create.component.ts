@@ -11,6 +11,7 @@ import { ToastrService } from 'ngx-toastr';
     styleUrls: ['./menuItem-create.component.css']
 })
 export class MenuItemCreateComponent implements OnInit {
+    formData: menuItem;
     id: string;
     name: string;
     price: number = 10;
@@ -42,7 +43,7 @@ export class MenuItemCreateComponent implements OnInit {
     resetForm(form?: NgForm) {
       if (form != null)
         form.resetForm();
-        this.dataService.formData = {
+        this.formData = {
         id: null,
         name: '',
         price: 10,

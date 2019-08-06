@@ -40,14 +40,27 @@ export class MenuItemCreateComponent implements OnInit {
     }
 
     resetForm(form?: NgForm) {
-    if (form != null)
-      form.resetForm();
-      this.dataService.formData = {
-      id: null,
-      name: '',
-      price: 10,
-      qty: 1,
-      discount: 0,
+      if (form != null)
+        form.resetForm();
+        this.dataService.formData = {
+        id: null,
+        name: '',
+        price: 10,
+        qty: 1,
+        discount: 0,
+      }
     }
-  }
+
+    onSubmit(form: NgForm) {
+      let data = Object.assign({}, form.value);
+      delete data.id;
+      if (form.value.id == null)
+        this.firestore.collection('menulist').add(data);
+      else
+        this.firestore.doc('menulist/' + form.value.id).update(data);
+
+      this.resetForm(form);
+      this.toastr.success('Submitted successfully', 'EMP. Register');
+    }
+
 }

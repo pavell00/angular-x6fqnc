@@ -45,7 +45,10 @@
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
   <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 </table>
-<a [routerLink]="['/order-detail']">Новый заказ</a>
+
+<div>
+  <button mat-mini-fab color="primary" (click)="onCreateOrder()"><mat-icon>add</mat-icon></button>
+</div>
 
 <!--<mat-list>
   <mat-list-item *ngFor="let phrase of phrasesFiltered">

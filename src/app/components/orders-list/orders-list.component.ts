@@ -46,7 +46,9 @@ export class OrderListComponent implements OnInit {
     )
   }*/
 
-
+  onCreateOrder() {
+    this.router.navigateByUrl('menuItem-create');
+  }
 
 
 }

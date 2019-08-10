@@ -8,6 +8,7 @@ import {MatTableDataSource} from '@angular/material/table';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 
 export interface DialogData {
+  id: string;
   name: string;
   price: number;
   qty: number;
@@ -24,8 +25,7 @@ export class OrderDetailComponent implements OnInit {
   selectedMenu : menuItem[] = [];
   displayedColumns = ['add','name', 'price', 'qty', 'discount'];
 
-  animal: any;
-  name: string;
+  newData: any;
 
   constructor(private dataService: DataService,
     private firestore: AngularFirestore, public dialog: MatDialog) { }
@@ -57,13 +57,20 @@ export class OrderDetailComponent implements OnInit {
   openDialog(item: menuItem): void {
     const dialogRef = this.dialog.open(DialogOverviewExampleDialog, {
       width: '250px',
-      data: {name: item.name, price: item.price, qty: item.qty, discount: item.discount}
+      data: {id: item.id, name: item.name, price: item.price, qty: item.qty, discount: item.discount}
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
-      this.animal = result;
-      console.log(this.animal);
+      //console.log('The dialog was closed');
+      this.newData = result;
+      //console.log(this.newData);
+      for(let i = 0; i < this.selectedMenu.length; i++) {
+        if(this.selectedMenu[i].id == this.newData.id) {
+          this.selectedMenu[i].price = this.newData.price;
+          this.selectedMenu[i].qty = this.newData.qty;
+          this.selectedMenu[i].discount = this.newData.discount;
+        }
+      }
     });
   }
 }

@@ -6,7 +6,8 @@ import { FormsModule } from '@angular/forms';
 
 import { MatTableModule, MatExpansionModule, MatFormFieldModule,
   MatInputModule, MatButtonModule, MatCheckboxModule, MatOptionModule, MatSelectModule, 
-  MatListModule, MatIconModule, MatToolbar, MatToolbarModule, MatSnackBarModule } from '@angular/material';
+  MatListModule, MatIconModule, MatToolbar, MatToolbarModule, MatSnackBarModule
+   } from '@angular/material';
 
 import { environment } from './environments/environment';
 import { AngularFireModule } from "@angular/fire";
@@ -35,7 +36,7 @@ import { HelloComponent } from './hello.component';
     AppRoutingModule,
     FormsModule,
     MatFormFieldModule, MatTableModule, MatIconModule,
-    MatInputModule, MatOptionModule, MatSelectModule,
+    MatInputModule, MatOptionModule, MatSelectModule, MatCheckboxModule,
     ToastrModule.forRoot(),
     HttpClientModule
     ],

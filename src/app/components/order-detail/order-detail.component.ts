@@ -68,13 +68,15 @@ export class OrderDetailComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       //console.log('The dialog was closed');
-      this.newData = result;
-      //console.log(this.newData);
-      for(let i = 0; i < this.selectedMenu.length; i++) {
-        if(this.selectedMenu[i].id == this.newData.id) {
-          this.selectedMenu[i].price = this.newData.price;
-          this.selectedMenu[i].qty = this.newData.qty;
-          this.selectedMenu[i].discount = this.newData.discount;
+      if (result) {
+        this.newData = result;
+        //console.log(this.newData);
+        for(let i = 0; i < this.selectedMenu.length; i++) {
+          if(this.selectedMenu[i].id == this.newData.id) {
+            this.selectedMenu[i].price = this.newData.price;
+            this.selectedMenu[i].qty = this.newData.qty;
+            this.selectedMenu[i].discount = this.newData.discount;
+          }
         }
       }
     });

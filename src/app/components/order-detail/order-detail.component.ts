@@ -8,8 +8,10 @@ import {MatTableDataSource} from '@angular/material/table';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 
 export interface DialogData {
-  animal: string;
   name: string;
+  price: number;
+  qty: number;
+  discount: number;
 }
 
 @Component({
@@ -22,7 +24,7 @@ export class OrderDetailComponent implements OnInit {
   selectedMenu : menuItem[] = [];
   displayedColumns = ['add','name', 'price', 'qty', 'discount'];
 
-  animal: string;
+  animal: any;
   name: string;
 
   constructor(private dataService: DataService,
@@ -52,15 +54,16 @@ export class OrderDetailComponent implements OnInit {
     }
   }
 
-  openDialog(): void {
+  openDialog(item: menuItem): void {
     const dialogRef = this.dialog.open(DialogOverviewExampleDialog, {
       width: '250px',
-      data: {name: this.name, animal: this.animal}
+      data: {name: item.name, price: item.price, qty: item.qty, discount: item.discount}
     });
 
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
       this.animal = result;
+      console.log(this.animal);
     });
   }
 }

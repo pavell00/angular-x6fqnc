@@ -12,10 +12,10 @@
     </thead>
     <tbody>
       <tr *ngFor="let emp of selectedMenu">
-        <td (click)="onEdit(emp)">{{emp.name}}</td>
-        <td (click)="onEdit(emp)">{{emp.price}}</td>
-        <td (click)="onEdit(emp)">{{emp.qty}}</td>
-        <td (click)="onEdit(emp)">{{emp.discount}}</td>
+        <td (click)="openDialog(emp)">{{emp.name}}</td>
+        <td (click)="openDialog(emp)">{{emp.price}}</td>
+        <td (click)="openDialog(emp)">{{emp.qty}}</td>
+        <td (click)="openDialog(emp)">{{emp.discount}}</td>
         <td><button class="btn text-danger" (click)="onDelete(emp.id)">X</button></td>
       </tr>
     </tbody>

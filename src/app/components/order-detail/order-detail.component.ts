@@ -26,6 +26,8 @@ export class OrderDetailComponent implements OnInit {
   selectedMenu : menuItem[] = [];
   displayedColumns = ['add','name', 'price', 'qty', 'discount'];
 
+  orderDate: string;
+  orderNo: string;
   newData: any;
 
   constructor(private dataService: DataService,

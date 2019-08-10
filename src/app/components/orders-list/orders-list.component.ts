@@ -49,6 +49,16 @@ export class OrderListComponent implements OnInit {
   onCreateOrder() {
     this.router.navigateByUrl('order-detail');
   }
-
+  onViewOrder(item: Order) {
+    this.firestore.collection("orders").doc("EL6gKdzdTzuIozrdFwr4").collection("lines").get().toPromise().then(
+      snapshot => {
+        const v = snapshot.docs.map(
+          w => console.log(w.data())
+        )
+        
+      }
+    )
+    //console.log(item)
+  }
 
 }

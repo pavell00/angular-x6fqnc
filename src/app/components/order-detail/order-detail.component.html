@@ -1,11 +1,14 @@
 <div *ngIf="selectedMenu.length">
   <table class="table table-hover">
     <thead>
+      <tr>
+        <th>Selected elements</th>
+      </tr>
       <th>Name</th>
       <th>Price</th>
       <th>Qty</th>
       <th>Discount</th>
-      <th>-</th>
+      <th>Del</th>
     </thead>
     <tbody>
       <tr *ngFor="let emp of selectedMenu">
@@ -13,7 +16,7 @@
         <td (click)="onEdit(emp)">{{emp.price}}</td>
         <td (click)="onEdit(emp)">{{emp.qty}}</td>
         <td (click)="onEdit(emp)">{{emp.discount}}</td>
-        <td><button class="btn text-danger" (click)="onDelete(emp.id)">Delete</button></td>
+        <td><button class="btn text-danger" (click)="onDelete(emp.id)">X</button></td>
       </tr>
     </tbody>
   </table>

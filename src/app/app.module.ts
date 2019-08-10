@@ -6,17 +6,19 @@ import { FormsModule } from '@angular/forms';
 
 import { MatTableModule, MatExpansionModule, MatFormFieldModule,
   MatInputModule, MatButtonModule, MatCheckboxModule, MatOptionModule, MatSelectModule, 
-  MatListModule, MatIconModule, MatToolbar, MatToolbarModule, MatSnackBarModule
-   } from '@angular/material';
+  MatListModule, MatIconModule, MatToolbar, MatToolbarModule, MatSnackBarModule,
+  MAT_DIALOG_DATA,  } from '@angular/material';
+import {MatDialogModule, MatDialogRef, MatDialog} from '@angular/material/dialog';
 
 import { environment } from './environments/environment';
 import { AngularFireModule } from "@angular/fire";
 import { AngularFirestoreModule } from "@angular/fire/firestore";
 import { ToastrModule } from 'ngx-toastr';
 
+import { DataService } from './services/data.service';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { OrderDetailComponent, DialogOverviewExampleDialog } from './components/order-detail/order-detail.component';
+import { OrderDetailComponent } from './components/order-detail/order-detail.component';
 import { MenuListComponent } from './components/menu-list/menu-list.component';
 import { OrderListComponent } from './components/orders-list/orders-list.component';
 import { MenuItemCreateComponent } from './components/menuItem-create/menuItem-create.component';
@@ -24,7 +26,7 @@ import { MenuItemCreateComponent } from './components/menuItem-create/menuItem-c
 @NgModule({
   declarations: [ 
     AppComponent,
-    OrderDetailComponent, DialogOverviewExampleDialog,
+    OrderDetailComponent,
     MenuListComponent, OrderListComponent, MenuItemCreateComponent
     ],
   imports:      [ 
@@ -34,11 +36,15 @@ import { MenuItemCreateComponent } from './components/menuItem-create/menuItem-c
     BrowserAnimationsModule,
     AppRoutingModule,
     FormsModule,
-    MatFormFieldModule, MatTableModule, MatIconModule,
+    MatFormFieldModule, MatTableModule, MatIconModule, MatDialogModule,
     MatInputModule, MatOptionModule, MatSelectModule, MatCheckboxModule,
     ToastrModule.forRoot(),
     HttpClientModule
     ],
+  providers: [DataService, 
+    { provide: MatDialogRef, useValue: {close: (dialogResult: any) => { }}},
+    { provide: MAT_DIALOG_DATA, useValue: [] }
+  ],
   exports: [AppRoutingModule],   
   bootstrap:    [ AppComponent ]
 })

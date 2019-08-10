@@ -12,12 +12,12 @@ import {MatTableDataSource} from '@angular/material/table';
   styleUrls: ['./order-detail.component.css']
 })
 export class OrderDetailComponent implements OnInit {
-  selectedMenuItem = new SelectionModel<menuItem2>(true, []);
   menulist : menuItem2[] = [];
-  displayedColumns = ['select','name', 'price', 'qty', 'discount'];
+  selectedMenu : menuItem2[] = [];
+  displayedColumns = ['add','name', 'price', 'qty', 'discount'];
 
   constructor(private dataService: DataService,
-    private firestore: AngularFirestore,) { }
+    private firestore: AngularFirestore) { }
 
   ngOnInit() {
     this.dataService.getMenuList().subscribe(actionArray => {
@@ -30,28 +30,9 @@ export class OrderDetailComponent implements OnInit {
     });
   }
 
-  /** Whether the number of selected elements matches the total number of rows. */
-  isAllSelected() {
-    const numSelected = this.selectedMenuItem.selected.length;
-    const numRows = this.menulist.length;
-    return numSelected === numRows;
-  }
-
-  /** Selects all rows if they are not all selected; otherwise clear selection. */
-  masterToggle() {
-    //console.log();
-    this.isAllSelected() ?
-        this.selectedMenuItem.clear() :
-        //this.dataSource.data.forEach(row => this.selectedMenuItem.select(row));
-        this.menulist.forEach(row => this.selectedMenuItem.select(row))
-  }
-
-  /** The label for the checkbox on the passed row */
-  checkboxLabel(row?: menuItem2): string {
-    if (!row) {
-      return `${this.isAllSelected() ? 'select' : 'deselect'} all`;
-    }
-    return `${this.selectedMenuItem.isSelected(row) ? 'deselect' : 'select'} row ${row.position + 1}`;
+ 
+  onAdd(item: menuItem2) {
+    this.selectedMenu.push(item);
   }
 
 }

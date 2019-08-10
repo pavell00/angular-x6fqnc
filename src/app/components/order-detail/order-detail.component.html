@@ -1,22 +1,35 @@
-<table mat-table [dataSource]="menulist" class="mat-elevation-z8">
+<table class="table table-hover">
+  <thead>
+    <th>Name</th>
+    <th>Price</th>
+    <th>Qty</th>
+    <th>Discount</th>
+    <th>-</th>
+  </thead>
+  <tbody>
+    <tr *ngFor="let emp of selectedMenu">
+      <td (click)="onEdit(emp)">{{emp.name}}</td>
+      <td (click)="onEdit(emp)">{{emp.price}}</td>
+      <td (click)="onEdit(emp)">{{emp.qty}}</td>
+      <td (click)="onEdit(emp)">{{emp.discount}}</td>
+      <td><a class="btn text-danger" (click)="onDelete(emp.id)"><i class="fa fa-trash"></i></a></td>
+    </tr>
+  </tbody>
+</table>
 
-  <!-- Checkbox Column -->
-  <ng-container matColumnDef="select">
-    <th mat-header-cell *matHeaderCellDef>
-      <mat-checkbox (change)="$event ? masterToggle() : null"
-                    [checked]="selectedMenuItem.hasValue() && isAllSelected()"
-                    [indeterminate]="selectedMenuItem.hasValue() && !isAllSelected()"
-                    [aria-label]="checkboxLabel()">
-      </mat-checkbox>
-    </th>
-    <td mat-cell *matCellDef="let row">
-      <mat-checkbox (click)="$event.stopPropagation()"
-                    (change)="$event ? selectedMenuItem.toggle(row) : null"
-                    [checked]="selectedMenuItem.isSelected(row)"
-                    [aria-label]="checkboxLabel(row)">
-      </mat-checkbox>
-    </td>
-  </ng-container>
+<table mat-table [dataSource]="menulist" class="mat-elevation-z8">
+  
+  <!-- Add Column -->
+    <ng-container matColumnDef="add">
+        <th mat-header-cell *matHeaderCellDef>add</th>
+        <td mat-cell *matCellDef="let element">
+            <button mat-mini-fab aria-label="Example icon-button with a heart icon" (click)="onAdd(element)">
+                <a mat-mini-fab >
+                  <mat-icon class="md-18">trash</mat-icon>
+                </a>
+              </button>
+        </td>
+      </ng-container>
 
   <!-- Position Column -->
   <ng-container matColumnDef="name">

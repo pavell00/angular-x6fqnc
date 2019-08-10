@@ -22,8 +22,11 @@
   </table>
 </div>
 
-<table mat-table [dataSource]="menulist" class="mat-elevation-z8">
-  
+<mat-form-field>
+    <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+</mat-form-field>
+
+<table mat-table [dataSource]="filteredMenulist" class="mat-elevation-z8">
   <!-- Add Column -->
     <ng-container matColumnDef="add">
         <th mat-header-cell *matHeaderCellDef>add</th>

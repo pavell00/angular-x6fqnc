@@ -22,6 +22,7 @@ export interface DialogData {
 })
 export class OrderDetailComponent implements OnInit {
   menulist : menuItem[] = [];
+  filteredMenulist : menuItem[] = [];
   selectedMenu : menuItem[] = [];
   displayedColumns = ['add','name', 'price', 'qty', 'discount'];
 
@@ -52,6 +53,11 @@ export class OrderDetailComponent implements OnInit {
         this.selectedMenu.splice(i, 1);
       }
     }
+  }
+
+  applyFilter(filterValue: string) {
+    //console.log(filterValue)
+    this.filteredMenulist = this.menulist.filter(v => v.name.toLowerCase().startsWith(filterValue.trim().toLowerCase()));
   }
 
   openDialog(item: menuItem): void {

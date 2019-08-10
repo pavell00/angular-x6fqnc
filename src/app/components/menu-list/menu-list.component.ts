@@ -40,4 +40,5 @@ export class MenuListComponent implements OnInit {
       this.toastr.warning('Deleted successfully','EMP. Register');
     }
   }
+
 }

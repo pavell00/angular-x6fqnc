@@ -16,16 +16,15 @@ import { ToastrModule } from 'ngx-toastr';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { OrderDetailComponent } from './components/order-detail/order-detail.component';
+import { OrderDetailComponent, DialogOverviewExampleDialog } from './components/order-detail/order-detail.component';
 import { MenuListComponent } from './components/menu-list/menu-list.component';
 import { OrderListComponent } from './components/orders-list/orders-list.component';
 import { MenuItemCreateComponent } from './components/menuItem-create/menuItem-create.component';
-import { HelloComponent } from './hello.component';
 
 @NgModule({
   declarations: [ 
     AppComponent,
-    OrderDetailComponent,
+    OrderDetailComponent, DialogOverviewExampleDialog,
     MenuListComponent, OrderListComponent, MenuItemCreateComponent
     ],
   imports:      [ 

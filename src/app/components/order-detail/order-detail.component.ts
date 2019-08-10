@@ -1,10 +1,16 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { Order } from '../../models/order';
 import { menuItem } from '../../models/menuItem';
 import { DataService } from '../../services/data.service';
 import { AngularFirestore } from '@angular/fire/firestore';
 import {SelectionModel} from '@angular/cdk/collections';
 import {MatTableDataSource} from '@angular/material/table';
+import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
+
+export interface DialogData {
+  animal: string;
+  name: string;
+}
 
 @Component({
   selector: 'order-detail',
@@ -16,8 +22,11 @@ export class OrderDetailComponent implements OnInit {
   selectedMenu : menuItem[] = [];
   displayedColumns = ['add','name', 'price', 'qty', 'discount'];
 
+  animal: string;
+  name: string;
+
   constructor(private dataService: DataService,
-    private firestore: AngularFirestore) { }
+    private firestore: AngularFirestore, public dialog: MatDialog) { }
 
   ngOnInit() {
     this.dataService.getMenuList().subscribe(actionArray => {
@@ -29,7 +38,6 @@ export class OrderDetailComponent implements OnInit {
       })
     });
   }
-
  
   onAdd(item: menuItem) {
     this.selectedMenu.push(item);
@@ -42,6 +50,33 @@ export class OrderDetailComponent implements OnInit {
         this.selectedMenu.splice(i, 1);
       }
     }
+  }
+
+  openDialog(): void {
+    const dialogRef = this.dialog.open(DialogOverviewExampleDialog, {
+      width: '250px',
+      data: {name: this.name, animal: this.animal}
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+      this.animal = result;
+    });
+  }
+}
+
+@Component({
+  selector: 'dialog-overview-example-dialog',
+  templateUrl: 'edit-dialog.html',
+})
+export class DialogOverviewExampleDialog {
+
+  constructor(
+    public dialogRef: MatDialogRef<DialogOverviewExampleDialog>,
+    @Inject(MAT_DIALOG_DATA) public data: DialogData) {}
+
+  onNoClick(): void {
+    this.dialogRef.close();
   }
 
 }

@@ -35,4 +35,8 @@ export class OrderDetailComponent implements OnInit {
     this.selectedMenu.push(item);
   }
 
+  onDelete() {
+    
+  }
+
 }

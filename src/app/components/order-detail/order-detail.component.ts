@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Order } from '../../models/order';
-import { menuItem } from '../../models/menuItem';
+import { menuItem2 } from '../../models/menuItem2';
 import { DataService } from '../../services/data.service';
 import { AngularFirestore } from '@angular/fire/firestore';
 import {SelectionModel} from '@angular/cdk/collections';
@@ -14,9 +14,9 @@ import {MatTableDataSource} from '@angular/material/table';
 export class OrderDetailComponent implements OnInit {
 
   //dataSource = new MatTableDataSource<menuItem>(ELEMENT_DATA);
-  selectedMenuItem = new SelectionModel<menuItem>(true, []);
-  dataSource = new MatTableDataSource<menuItem>();
-  menulist : menuItem[] = [];
+  selectedMenuItem = new SelectionModel<menuItem2>(true, []);
+  dataSource = new MatTableDataSource<menuItem2>();
+  menulist : menuItem2[] = [];
   displayedColumns = ['select','name', 'price', 'qty', 'discount'];
 
   constructor(private dataService: DataService,
@@ -30,7 +30,7 @@ export class OrderDetailComponent implements OnInit {
         return {
           id: item.payload.doc.id,
           ...item.payload.doc.data()
-        } as menuItem;
+        } as menuItem2;
         this.dataSource.data = this.menulist;
       })
     });
@@ -51,7 +51,7 @@ export class OrderDetailComponent implements OnInit {
   }
 
   /** The label for the checkbox on the passed row */
-  checkboxLabel(row?: menuItem): string {
+  checkboxLabel(row?: menuItem2): string {
     if (!row) {
       return `${this.isAllSelected() ? 'select' : 'deselect'} all`;
     }

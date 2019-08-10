@@ -12,7 +12,7 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class MenuListComponent implements OnInit {
   menulist : menuItem[] = [];
-  displayedColumns = ['id','name', 'price', 'qty', 'discount', 'Actions'];
+  displayedColumns = ['name', 'price', 'qty', 'discount', 'Del'];
   
   constructor(private dataService: DataService, private router : Router,
     private firestore: AngularFirestore,

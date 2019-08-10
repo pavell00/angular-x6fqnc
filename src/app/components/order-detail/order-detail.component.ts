@@ -17,11 +17,11 @@ export class OrderDetailComponent implements OnInit {
   selectedMenuItem = new SelectionModel<menuItem>(true, []);
   dataSource = new MatTableDataSource<menuItem>();
   menulist : menuItem[] = [];
-  displayedColumns = ['id','name', 'price', 'qty', 'discount', 'Actions'];
+  displayedColumns = ['select','name', 'price', 'qty', 'discount'];
 
   constructor(private dataService: DataService,
     private firestore: AngularFirestore,) {
-      //dataSource = new MatTableDataSource<menuItem>();
+      //this.dataSource.data = this.menulist;
     }
 
   ngOnInit() {
@@ -31,6 +31,7 @@ export class OrderDetailComponent implements OnInit {
           id: item.payload.doc.id,
           ...item.payload.doc.data()
         } as menuItem;
+        this.dataSource.data = this.menulist;
       })
     });
   }

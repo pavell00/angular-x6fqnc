@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Order } from '../../models/order';
-import { menuItem2 } from '../../models/menuItem2';
+import { menuItem } from '../../models/menuItem';
 import { DataService } from '../../services/data.service';
 import { AngularFirestore } from '@angular/fire/firestore';
 import {SelectionModel} from '@angular/cdk/collections';
@@ -12,8 +12,8 @@ import {MatTableDataSource} from '@angular/material/table';
   styleUrls: ['./order-detail.component.css']
 })
 export class OrderDetailComponent implements OnInit {
-  menulist : menuItem2[] = [];
-  selectedMenu : menuItem2[] = [];
+  menulist : menuItem[] = [];
+  selectedMenu : menuItem[] = [];
   displayedColumns = ['add','name', 'price', 'qty', 'discount'];
 
   constructor(private dataService: DataService,
@@ -25,18 +25,23 @@ export class OrderDetailComponent implements OnInit {
         return {
           id: item.payload.doc.id,
           ...item.payload.doc.data()
-        } as menuItem2;
+        } as menuItem;
       })
     });
   }
 
  
-  onAdd(item: menuItem2) {
+  onAdd(item: menuItem) {
     this.selectedMenu.push(item);
   }
 
-  onDelete() {
-    
+  onDelete(id: string) {
+    //console.log(id)
+    for(let i = 0; i < this.selectedMenu.length; i++) {
+      if(this.selectedMenu[i].id == id) {
+        this.selectedMenu.splice(i, 1);
+      }
+    }
   }
 
 }

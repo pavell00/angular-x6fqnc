@@ -83,7 +83,8 @@ export class OrderDetailComponent implements OnInit {
 
 @Component({
   selector: 'dialog-overview-example-dialog',
-  templateUrl: 'edit-dialog.html',
+  templateUrl: './edit-dialog.html',
+  styleUrls: ['./edit-dialog.css']
 })
 export class DialogOverviewExampleDialog {
 

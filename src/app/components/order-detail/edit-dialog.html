@@ -12,7 +12,7 @@
     <input matInput [(ngModel)]="data.discount">{{discount}}
   </mat-form-field>
 </div>
-<div mat-dialog-actions>
+<div mat-dialog-actions class="matdialogbutton">
   <button mat-button (click)="onNoClick()">No</button>
   <button mat-button [mat-dialog-close]="data" cdkFocusInitial>Ok</button>
 </div>

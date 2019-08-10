@@ -12,17 +12,12 @@ import {MatTableDataSource} from '@angular/material/table';
   styleUrls: ['./order-detail.component.css']
 })
 export class OrderDetailComponent implements OnInit {
-
-  //dataSource = new MatTableDataSource<menuItem>(ELEMENT_DATA);
   selectedMenuItem = new SelectionModel<menuItem2>(true, []);
-  dataSource = new MatTableDataSource<menuItem2>();
   menulist : menuItem2[] = [];
   displayedColumns = ['select','name', 'price', 'qty', 'discount'];
 
   constructor(private dataService: DataService,
-    private firestore: AngularFirestore,) {
-      //this.dataSource.data = this.menulist;
-    }
+    private firestore: AngularFirestore,) { }
 
   ngOnInit() {
     this.dataService.getMenuList().subscribe(actionArray => {
@@ -31,7 +26,6 @@ export class OrderDetailComponent implements OnInit {
           id: item.payload.doc.id,
           ...item.payload.doc.data()
         } as menuItem2;
-        this.dataSource.data = this.menulist;
       })
     });
   }
@@ -45,9 +39,11 @@ export class OrderDetailComponent implements OnInit {
 
   /** Selects all rows if they are not all selected; otherwise clear selection. */
   masterToggle() {
+    //console.log();
     this.isAllSelected() ?
         this.selectedMenuItem.clear() :
-        this.dataSource.data.forEach(row => this.selectedMenuItem.select(row));
+        //this.dataSource.data.forEach(row => this.selectedMenuItem.select(row));
+        this.menulist.forEach(row => this.selectedMenuItem.select(row))
   }
 
   /** The label for the checkbox on the passed row */

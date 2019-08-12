@@ -17,8 +17,7 @@ export class OrderListComponent implements OnInit {
   displayedColumns: string[] = [];
   columnsToDisplay: string[] = [];
 
-  constructor(private dataService: DataService, private router : Router,private firestore: AngularFirestore,
-    private toastr:ToastrService) { }
+  constructor(private dataService: DataService, private router : Router,private firestore: AngularFirestore, private toastr:ToastrService) { }
 
   ngOnInit(): void {
     //this.onStart();
@@ -50,15 +49,48 @@ export class OrderListComponent implements OnInit {
     this.router.navigateByUrl('order-detail');
   }
   onViewOrder(item: Order) {
-    this.firestore.collection("orders").doc("EL6gKdzdTzuIozrdFwr4").collection("lines").get().toPromise().then(
+   this.firestore.collection("orders").doc("EL6gKdzdTzuIozrdFwr4").collection("lines").get().toPromise().then(
       snapshot => {
         const v = snapshot.docs.map(
           w => console.log(w.data())
         )
-        
       }
     )
     //console.log(item)
   }
 
+  getMarker(id: string) {
+    let cityRef = this.firestore.collection('orders').doc('EL6gKdzdTzuIozrdFwr4');
+    let getDoc = cityRef.get().toPromise()
+    .then(doc => {
+      if (!doc.exists) {
+        console.log('No such document!');
+      } else {
+        console.log('Document data:', doc.data());
+      }
+    })
+    .catch(err => {
+      console.log('Error getting document', err);
+    });
+  }
+
+  getMarker2(id: string) {
+    
+    let cityRef = this.firestore.collection('orders');
+    let q = cityRef.get().toPromise().then(
+      result => result.query.where('id', '==', id).get().then(
+        q => {
+          console.log(q.docs.map(m => m.id));
+          let docId = q.docs.map(m => m.id);
+          cityRef.doc(docId[0]).collection("lines").get().toPromise().then(
+              snapshot => {
+                const v = snapshot.docs.map(
+                  w => console.log(w.data())
+                )
+              }
+            )
+        }
+      )
+    )
+  }
 }

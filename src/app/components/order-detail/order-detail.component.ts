@@ -37,6 +37,23 @@ export class OrderDetailComponent implements OnInit {
     private firestore: AngularFirestore, public dialog: MatDialog) {
       this.route.queryParams.subscribe(params => {
             this.orderId = params["orderid"];
+            if (this.orderId) {
+              this.selectedMenu = null;
+              let cityRef = this.firestore.collection('orders');
+              let q = cityRef.get().toPromise().then(
+                result => result.query.where('id', '==', this.orderId).get().then(
+                  q => {
+                    cityRef.doc(this.orderId).collection("lines").get().toPromise().then(
+                    snapshot => {
+                      const v = snapshot.docs.map(
+                        w => { 
+                            console.log(w.data())
+                        }
+                      )
+                    }
+                    )
+                  }
+                ))}
         });
     }
 

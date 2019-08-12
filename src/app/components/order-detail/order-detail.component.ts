@@ -21,7 +21,7 @@ export interface DialogData {
   templateUrl: './order-detail.component.html',
   styleUrls: ['./order-detail.component.css']
 })
-export class OrderDetailComponent implements OnInit {
+export class OrderDetailComponent implements OnInit, OnDestroy {
   subscription: Subscription;
   menulist : menuItem[] = [];
   filteredMenulist : menuItem[] = [];
@@ -45,7 +45,10 @@ export class OrderDetailComponent implements OnInit {
         } as menuItem;
       })
     });
-
+    this.subscription = this.dataService.selectedOrder$.subscribe(
+      orderId =>  {this.orderId = orderId;
+      console.log(orderId)}
+    );
   }
  
   onAdd(item: menuItem) {
@@ -88,10 +91,10 @@ export class OrderDetailComponent implements OnInit {
     });
   }
 
-  //ngOnDestroy() {
+  ngOnDestroy() {
     // prevent memory leak when component destroyed
-    //this.subscription.unsubscribe();
-  //}
+    this.subscription.unsubscribe();
+  }
 }
 
 @Component({

@@ -46,6 +46,7 @@ export class OrderListComponent implements OnInit {
   }*/
 
   onCreateOrder() {
+    this.dataService.setOrderId('');
     this.router.navigateByUrl('order-detail');
   }
   onViewOrder(item: Order) {
@@ -75,17 +76,20 @@ export class OrderListComponent implements OnInit {
   }
 
   getMarker2(id: string) {
-    
     let cityRef = this.firestore.collection('orders');
     let q = cityRef.get().toPromise().then(
       result => result.query.where('id', '==', id).get().then(
         q => {
-          console.log(q.docs.map(m => m.id));
+          //console.log(q.docs.map(m => m.id));
           let docId = q.docs.map(m => m.id);
+          this.dataService.setOrderId(docId[0]);
+          this.router.navigateByUrl('order-detail');
           cityRef.doc(docId[0]).collection("lines").get().toPromise().then(
               snapshot => {
                 const v = snapshot.docs.map(
-                  w => console.log(w.data())
+                  w => { w
+                    //console.log(w.data())
+                  }
                 )
               }
             )

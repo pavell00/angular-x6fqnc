@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit, Inject, OnDestroy } from '@angular/core';
 import { Order } from '../../models/order';
 import { menuItem } from '../../models/menuItem';
 import { DataService } from '../../services/data.service';
@@ -6,6 +6,7 @@ import { AngularFirestore } from '@angular/fire/firestore';
 import {SelectionModel} from '@angular/cdk/collections';
 import {MatTableDataSource} from '@angular/material/table';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
+import { Subscription }   from 'rxjs';
 
 export interface DialogData {
   id: string;
@@ -21,13 +22,15 @@ export interface DialogData {
   styleUrls: ['./order-detail.component.css']
 })
 export class OrderDetailComponent implements OnInit {
+  subscription: Subscription;
   menulist : menuItem[] = [];
   filteredMenulist : menuItem[] = [];
   selectedMenu : menuItem[] = [];
   displayedColumns = ['add','name', 'price', 'qty', 'discount'];
 
-  orderDate: string;
+  orderDate: string = new Date().toLocaleString();
   orderNo: string;
+  orderId: string;
   newData: any;
 
   constructor(private dataService: DataService,
@@ -42,6 +45,7 @@ export class OrderDetailComponent implements OnInit {
         } as menuItem;
       })
     });
+
   }
  
   onAdd(item: menuItem) {
@@ -83,6 +87,11 @@ export class OrderDetailComponent implements OnInit {
       }
     });
   }
+
+  //ngOnDestroy() {
+    // prevent memory leak when component destroyed
+    //this.subscription.unsubscribe();
+  //}
 }
 
 @Component({

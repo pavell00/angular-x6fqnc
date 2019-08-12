@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpResponse, HttpParams } from '@angular/common/http';
-
+import { Subject } from 'rxjs';
 import { Order } from '../models/order';
 import { menuItem } from '../models/menuItem';
 import { Observable, from, BehaviorSubject } from 'rxjs';
@@ -14,13 +14,19 @@ import { AngularFireDatabase, AngularFireObject } from '@angular/fire/database';
 })
 export class DataService {
 
-  dataUrl = '';
   public formData: menuItem;
   
   obsArray: BehaviorSubject<any[]> = new BehaviorSubject<any[]>([]);
   items: Observable<Order[]> = this.obsArray.asObservable();
 
+  private selectedOrderIdSource = new Subject<string>();
+  selectedOrder$ = this.selectedOrderIdSource.asObservable();
+
   constructor(private http: HttpClient, private firestore: AngularFirestore) { }
+
+  setOrderId(id: string) {
+    this.selectedOrderIdSource.next(id);
+  }
 
   getMenuList() {
     return this.firestore.collection('menulist').snapshotChanges();

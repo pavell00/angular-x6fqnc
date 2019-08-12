@@ -19,14 +19,7 @@ export class DataService {
   obsArray: BehaviorSubject<any[]> = new BehaviorSubject<any[]>([]);
   items: Observable<Order[]> = this.obsArray.asObservable();
 
-  private selectedOrderIdSource = new Subject<string>();
-  selectedOrder$ = this.selectedOrderIdSource.asObservable();
-
   constructor(private http: HttpClient, private firestore: AngularFirestore) { }
-
-  setOrderId(id: string) {
-    this.selectedOrderIdSource.next(id);
-  }
 
   getMenuList() {
     return this.firestore.collection('menulist').snapshotChanges();

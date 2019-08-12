@@ -3,10 +3,11 @@ import { Order } from '../../models/order';
 import { menuItem } from '../../models/menuItem';
 import { DataService } from '../../services/data.service';
 import { AngularFirestore } from '@angular/fire/firestore';
-import {SelectionModel} from '@angular/cdk/collections';
-import {MatTableDataSource} from '@angular/material/table';
+
+import { ActivatedRoute }     from '@angular/router';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
-import { Subscription }   from 'rxjs';
+import { Subscription, Observable }   from 'rxjs';
+import { map } from 'rxjs/operators';
 
 export interface DialogData {
   id: string;
@@ -21,8 +22,7 @@ export interface DialogData {
   templateUrl: './order-detail.component.html',
   styleUrls: ['./order-detail.component.css']
 })
-export class OrderDetailComponent implements OnInit, OnDestroy {
-  subscription: Subscription;
+export class OrderDetailComponent implements OnInit {
   menulist : menuItem[] = [];
   filteredMenulist : menuItem[] = [];
   selectedMenu : menuItem[] = [];
@@ -33,8 +33,12 @@ export class OrderDetailComponent implements OnInit, OnDestroy {
   orderId: string;
   newData: any;
 
-  constructor(private dataService: DataService,
-    private firestore: AngularFirestore, public dialog: MatDialog) { }
+  constructor(private dataService: DataService, private route: ActivatedRoute,
+    private firestore: AngularFirestore, public dialog: MatDialog) {
+      this.route.queryParams.subscribe(params => {
+            this.orderId = params["orderid"];
+        });
+    }
 
   ngOnInit() {
     this.dataService.getMenuList().subscribe(actionArray => {
@@ -45,10 +49,8 @@ export class OrderDetailComponent implements OnInit, OnDestroy {
         } as menuItem;
       })
     });
-    this.subscription = this.dataService.selectedOrder$.subscribe(
-      orderId =>  {this.orderId = orderId;
-      console.log(orderId)}
-    );
+    // Capture the session ID if available
+    //this.orderId = this.route.queryParamMap.pipe(map(params => params.get('orderid') || ''));
   }
  
   onAdd(item: menuItem) {
@@ -65,7 +67,7 @@ export class OrderDetailComponent implements OnInit, OnDestroy {
   }
 
   applyFilter(filterValue: string) {
-    //console.log(filterValue)
+    //this.orderId.pipe(map(m => console.log(m)))
     this.filteredMenulist = this.menulist.filter(v => v.name.toLowerCase().startsWith(filterValue.trim().toLowerCase()));
   }
 
@@ -91,10 +93,6 @@ export class OrderDetailComponent implements OnInit, OnDestroy {
     });
   }
 
-  ngOnDestroy() {
-    // prevent memory leak when component destroyed
-    this.subscription.unsubscribe();
-  }
 }
 
 @Component({

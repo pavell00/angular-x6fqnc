@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, NavigationExtras } from '@angular/router';
 
 import { Order } from '../../models/order';
 import { DataService } from '../../services/data.service';
@@ -46,7 +46,7 @@ export class OrderListComponent implements OnInit {
   }*/
 
   onCreateOrder() {
-    this.dataService.setOrderId('');
+
     this.router.navigateByUrl('order-detail');
   }
   onViewOrder(item: Order) {
@@ -82,8 +82,12 @@ export class OrderListComponent implements OnInit {
         q => {
           //console.log(q.docs.map(m => m.id));
           let docId = q.docs.map(m => m.id);
-          this.dataService.setOrderId(docId[0]);
-          this.router.navigateByUrl('order-detail');
+          let navigationExtras: NavigationExtras = {
+            queryParams: { 'orderid': docId[0] }
+          };
+          //this.router.navigateByUrl('order-detail', navigationExtras);
+          this.router.navigate(['/order-detail'], navigationExtras);
+          /*
           cityRef.doc(docId[0]).collection("lines").get().toPromise().then(
               snapshot => {
                 const v = snapshot.docs.map(
@@ -92,7 +96,7 @@ export class OrderListComponent implements OnInit {
                   }
                 )
               }
-            )
+            )*/
         }
       )
     )

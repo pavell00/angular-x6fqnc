@@ -29,6 +29,10 @@ export class DataService {
     //return this.http.get<Order[]>(this.dataUrl);
     return this.firestore.collection('orders').snapshotChanges();
   }
+
+  getSubCollections(id: string) {
+    return this.firestore.collection('orders').doc(id).collection("lines").snapshotChanges();
+  }
   
   getMaxIdFromItems() {
     return this.items.pipe(

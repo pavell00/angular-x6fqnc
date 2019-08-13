@@ -1,12 +1,12 @@
-import { Component, OnInit, Inject, OnDestroy } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { Order } from '../../models/order';
 import { menuItem } from '../../models/menuItem';
 import { DataService } from '../../services/data.service';
 import { AngularFirestore } from '@angular/fire/firestore';
 
-import { ActivatedRoute }     from '@angular/router';
+import { ActivatedRoute, NavigationEnd }     from '@angular/router';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
-import { Subscription, Observable }   from 'rxjs';
+import { Subscription, Observable, Subject }   from 'rxjs';
 import { map } from 'rxjs/operators';
 
 export interface DialogData {
@@ -32,30 +32,45 @@ export class OrderDetailComponent implements OnInit {
   orderNo: string;
   orderId: string;
   newData: any;
+  testAr: any;
 
   constructor(private dataService: DataService, private route: ActivatedRoute,
     private firestore: AngularFirestore, public dialog: MatDialog) {
-      //this.route.queryParams.subscribe(params => {
-      //      this.orderId = params["orderid"];
-      //})
+
   }
   
   getOrderItems() {
     if (this.orderId) {
-      
-      this.subscription = this.route.queryParams.subscribe(params => {
-      this.orderId = params["orderid"];
-      })
-      
       this.selectedMenu = null;
       let cityRef = this.firestore.collection('orders');
-      cityRef.doc(this.orderId).collection("lines").get().toPromise().then(
+      this.testAr = cityRef.doc(this.orderId).collection("lines").get().toPromise().then(
         snapshot => {
-          const v = snapshot.docs.forEach(obj => {
-            console.log(obj)
+          const v = snapshot.docs.map(obj => {
+            //console.log(obj.data())
+            return obj.data()
+            //var o = new menuItem();
+            /*o.id = "1";
+            o.name = obj.data().name;
+            o.price = obj.data().price;
+            o.qty = obj.data().qty;
+            o.discount = obj.data().discount;*/
+            /*o.id = "1";
+            o.name = "test";
+            o.price = 20;
+            o.qty = 1;
+            o.discount = 0;
+            //console.log(o);*/
+            //this.testAr = (o);
+            //this.selectedMenu.push(o);
+            //console.log(obj.data().name)
             //map(m => console.log(m))
-            
+             
           })
+          v.forEach(
+            w => {
+              //console.log(w);
+            }
+          )
         }
       )
     }
@@ -70,10 +85,26 @@ export class OrderDetailComponent implements OnInit {
         } as menuItem;
       })
     });
-    // Capture the session ID if available
-    //this.orderId = this.route.queryParamMap.pipe(map(params => params.get('orderid') || ''));
+    // Capture the order ID if available
+    this.route.queryParams.subscribe(params => {
+      this.orderId = params["orderid"];
+    });
+
   }
  
+  getOrderItems2() {
+      if (this.orderId) {
+      this.dataService.getSubCollections(this.orderId).subscribe(actionArray => {
+        this.testAr = actionArray.map(item => {
+          return {
+            id: item.payload.doc.id,
+            ...item.payload.doc.data()
+          } as menuItem;
+        })
+      });
+    }
+  }
+
   onAdd(item: menuItem) {
     this.selectedMenu.push(item);
   }
@@ -112,10 +143,6 @@ export class OrderDetailComponent implements OnInit {
         }
       }
     });
-  }
-
-  ngOnDestroy () {
-    //this.subscription.unsubscribe();
   }
 
 }

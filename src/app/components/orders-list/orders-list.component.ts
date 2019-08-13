@@ -91,12 +91,13 @@ export class OrderListComponent implements OnInit {
           cityRef.doc(docId[0]).collection("lines").get().toPromise().then(
               snapshot => {
                 const v = snapshot.docs.map(
-                  w => { w
-                    //console.log(w.data())
+                  w => { 
+                    console.log(w.data())
                   }
                 )
               }
-            )*/
+            )
+          */
         }
       )
     )

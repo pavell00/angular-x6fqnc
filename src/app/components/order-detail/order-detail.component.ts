@@ -61,15 +61,28 @@ export class OrderDetailComponent implements OnInit, AfterContentInit {
   }
  
   onSave() {
-    this.firestore.collection("orders").doc(this.orderId).set({
-      id: this.orderId,
-      OrderDate: this.orderDate, 
-      TableNo: this.orderNo,
-      sumOrder: this.orderSum,
-      discountOrder: this.orderDiscount,
-      isDone: true,
-      OrderText: 'test check string'
+    console.log(this.orderId)
+    if (this.orderId) {
+      this.firestore.collection("orders").doc(this.orderId).set({
+        id: this.orderId,
+        OrderDate: this.orderDate, 
+        TableNo: this.orderNo,
+        sumOrder: this.orderSum,
+        discountOrder: this.orderDiscount,
+        isDone: true,
+        OrderText: 'test check string'
     })
+    } else {
+      this.firestore.collection("orders").add({
+        //id: this.orderId,
+        OrderDate: this.orderDate, 
+        TableNo: this.orderNo,
+        sumOrder: this.orderSum,
+        discountOrder: this.orderDiscount,
+        isDone: true,
+        OrderText: 'test check string'
+      })
+    }
   }
 
   ngAfterContentInit() { if (this.orderId) {this.getOrderItems2(); this.fillOrderData();}  }

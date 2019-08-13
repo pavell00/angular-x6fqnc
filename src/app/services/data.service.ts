@@ -30,7 +30,7 @@ export class DataService {
     return this.firestore.collection('orders').snapshotChanges();
   }
 
-  getSubCollections(id: string) {
+  getSubCollection(id: string) {
     return this.firestore.collection('orders').doc(id).collection("lines").snapshotChanges();
   }
   

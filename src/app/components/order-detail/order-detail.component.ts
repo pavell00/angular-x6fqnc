@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit, Inject, AfterContentInit } from '@angular/core';
 import { Order } from '../../models/order';
 import { menuItem } from '../../models/menuItem';
 import { DataService } from '../../services/data.service';
@@ -22,7 +22,7 @@ export interface DialogData {
   templateUrl: './order-detail.component.html',
   styleUrls: ['./order-detail.component.css']
 })
-export class OrderDetailComponent implements OnInit {
+export class OrderDetailComponent implements OnInit, AfterContentInit {
   menulist : menuItem[] = [];
   filteredMenulist : menuItem[] = [];
   selectedMenu : menuItem[] = [];
@@ -32,50 +32,13 @@ export class OrderDetailComponent implements OnInit {
   orderNo: string;
   orderId: string;
   newData: any;
-  testAr: any;
+
 
   constructor(private dataService: DataService, private route: ActivatedRoute,
     private firestore: AngularFirestore, public dialog: MatDialog) {
 
   }
   
-  getOrderItems() {
-    if (this.orderId) {
-      this.selectedMenu = null;
-      let cityRef = this.firestore.collection('orders');
-      this.testAr = cityRef.doc(this.orderId).collection("lines").get().toPromise().then(
-        snapshot => {
-          const v = snapshot.docs.map(obj => {
-            //console.log(obj.data())
-            return obj.data()
-            //var o = new menuItem();
-            /*o.id = "1";
-            o.name = obj.data().name;
-            o.price = obj.data().price;
-            o.qty = obj.data().qty;
-            o.discount = obj.data().discount;*/
-            /*o.id = "1";
-            o.name = "test";
-            o.price = 20;
-            o.qty = 1;
-            o.discount = 0;
-            //console.log(o);*/
-            //this.testAr = (o);
-            //this.selectedMenu.push(o);
-            //console.log(obj.data().name)
-            //map(m => console.log(m))
-             
-          })
-          v.forEach(
-            w => {
-              //console.log(w);
-            }
-          )
-        }
-      )
-    }
-  }
-
   ngOnInit() {
     this.dataService.getMenuList().subscribe(actionArray => {
       this.menulist = actionArray.map(item => {
@@ -92,10 +55,12 @@ export class OrderDetailComponent implements OnInit {
 
   }
  
+  ngAfterContentInit() { if (this.orderId) {this.getOrderItems2();}  }
+
   getOrderItems2() {
       if (this.orderId) {
-      this.dataService.getSubCollections(this.orderId).subscribe(actionArray => {
-        this.testAr = actionArray.map(item => {
+      this.dataService.getSubCollection(this.orderId).subscribe(actionArray => {
+        this.selectedMenu = actionArray.map(item => {
           return {
             id: item.payload.doc.id,
             ...item.payload.doc.data()

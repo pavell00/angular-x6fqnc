@@ -37,7 +37,6 @@ export class OrderDetailComponent implements OnInit, AfterContentInit {
 
   newData: any;
 
-
   constructor(private dataService: DataService, private route: ActivatedRoute,
     private firestore: AngularFirestore, public dialog: MatDialog) {
 

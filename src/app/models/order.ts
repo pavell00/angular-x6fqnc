@@ -4,4 +4,6 @@ export class Order {
     OrderDate?: String;
     isDone?: boolean = false;
     OrderText?: string = '';
+    sumOrder?: number = 0;
+    discountOrder?: number = 0;
   }

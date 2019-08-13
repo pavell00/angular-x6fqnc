@@ -28,9 +28,13 @@ export class OrderDetailComponent implements OnInit, AfterContentInit {
   selectedMenu : menuItem[] = [];
   displayedColumns = ['add','name', 'price', 'qty', 'discount'];
   subscription: Subscription;
+
   orderDate: string = new Date().toLocaleString();
   orderNo: string;
   orderId: string;
+  orderSum: number;
+  orderDiscount: number;
+
   newData: any;
 
 

@@ -92,7 +92,7 @@ export class OrderDetailComponent implements OnInit, AfterContentInit {
         //let docRef = this.firestore.collection('orders').doc(this.orderId);
         this.dataService.getOrder(this.orderId).get().toPromise().then(
           doc => {//console.log("Document data:", doc.data())
-            this.orderId = doc.data().id;
+            //this.orderId = this.orderId;
             this.orderNo = doc.data().TableNo;
             this.orderDate = doc.data().OrderDate;
             this.orderIsDone = doc.data().isDone;
@@ -105,6 +105,7 @@ export class OrderDetailComponent implements OnInit, AfterContentInit {
 
   onAdd(item: menuItem) {
     this.selectedMenu.push(item);
+    //console.log(this.selectedMenu)
   }
 
   onDelete(id: string) {

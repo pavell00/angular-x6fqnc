@@ -1,4 +1,4 @@
-<div *ngIf="orderId">
+<div *ngIf="orderId || selectedMenu?.length">
   <table class="table table-hover">
     <thead>
       <tr>
@@ -34,10 +34,10 @@
   <mat-form-field>
       <input matInput [(ngModel)]="orderDate" placeholder="Дата/время стола">
   </mat-form-field>
-  <mat-form-field>
+  <mat-form-field style="text-align: right;">
       <input matInput [(ngModel)]="orderSum" placeholder="Сумма">
   </mat-form-field>
-  <mat-form-field>
+  <mat-form-field style="text-align: right;">
       <input matInput [(ngModel)]="orderDiscount" placeholder="Дисконт">
   </mat-form-field>
 </span>

@@ -36,6 +36,7 @@ export class OrderDetailComponent implements OnInit, AfterContentInit {
   orderDiscount: number;
 
   newData: any;
+  testData: any
 
   constructor(private dataService: DataService, private route: ActivatedRoute,
     private firestore: AngularFirestore, public dialog: MatDialog) {
@@ -59,12 +60,14 @@ export class OrderDetailComponent implements OnInit, AfterContentInit {
   }
  
   onSave() {
-    this.firestore.doc(this.orderId).set({
+    this.firestore.collection("orders").doc(this.orderId).set({
+      id: this.orderId,
       OrderDate: this.orderDate, 
       TableNo: this.orderNo,
       sumOrder: this.orderSum,
       discountOrder: this.orderDiscount,
-      isDone: true
+      isDone: true,
+      OrderText: 'test check string'
     })
   }
 
@@ -78,9 +81,20 @@ export class OrderDetailComponent implements OnInit, AfterContentInit {
             id: item.payload.doc.id,
             ...item.payload.doc.data()
           } as menuItem;
-        })
+        });
       });
     }
+  }
+
+  getOrder() {
+    if (this.orderId) {
+       //console.log(this.dataService.getOrder(this.orderId) )
+      this.firestore.collection('orders').ref.doc(this.orderId).get().then(
+        res => console.log(res)
+      )
+        
+       
+      }
   }
 
   onAdd(item: menuItem) {

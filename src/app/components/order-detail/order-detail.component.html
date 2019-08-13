@@ -20,7 +20,8 @@
       </tr>
     </tbody>
   </table>
-  <button (click)="onSave()"></button>
+  <button (click)="onSave()">Save</button>
+  <button (click)="getOrder()">getOrder</button>
 </div>
 
 <span>
@@ -82,3 +83,5 @@
   <tr mat-row *matRowDef="let row; columns: displayedColumns;">
   </tr>
 </table>
+
+{{testData | json}}

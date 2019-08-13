@@ -34,6 +34,7 @@ export class OrderDetailComponent implements OnInit, AfterContentInit {
   orderId: string;
   orderSum: number;
   orderDiscount: number;
+  orderIsDone: boolean;
 
   newData: any;
   testData: any
@@ -71,7 +72,7 @@ export class OrderDetailComponent implements OnInit, AfterContentInit {
     })
   }
 
-  ngAfterContentInit() { if (this.orderId) {this.getOrderItems2();}  }
+  ngAfterContentInit() { if (this.orderId) {this.getOrderItems2(); this.fillOrderData();}  }
 
   getOrderItems2() {
       if (this.orderId) {
@@ -86,14 +87,19 @@ export class OrderDetailComponent implements OnInit, AfterContentInit {
     }
   }
 
-  getOrder() {
+  fillOrderData() {
     if (this.orderId) {
-       //console.log(this.dataService.getOrder(this.orderId) )
-      this.firestore.collection('orders').ref.doc(this.orderId).get().then(
-        res => console.log(res)
-      )
-        
-       
+        //let docRef = this.firestore.collection('orders').doc(this.orderId);
+        this.dataService.getOrder(this.orderId).get().toPromise().then(
+          doc => {//console.log("Document data:", doc.data())
+            this.orderId = doc.data().id;
+            this.orderNo = doc.data().TableNo;
+            this.orderDate = doc.data().OrderDate;
+            this.orderIsDone = doc.data().isDone;
+            this.orderSum = doc.data().sumOrder;
+            this.orderDiscount = doc.data().discountOrder;
+          }
+        )
       }
   }
 

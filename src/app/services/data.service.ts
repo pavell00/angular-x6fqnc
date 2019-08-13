@@ -32,7 +32,7 @@ export class DataService {
   
   getOrder(id: string) {
     //return this.firestore.collection('orders').doc(id).snapshotChanges();
-    this.firestore.collection('orders').doc(id).get();
+    return this.firestore.collection('orders').doc(id);
   }
 
 }

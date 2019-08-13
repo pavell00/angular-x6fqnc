@@ -27,7 +27,7 @@ export class OrderDetailComponent implements OnInit {
   filteredMenulist : menuItem[] = [];
   selectedMenu : menuItem[] = [];
   displayedColumns = ['add','name', 'price', 'qty', 'discount'];
-
+  subscription: Subscription;
   orderDate: string = new Date().toLocaleString();
   orderNo: string;
   orderId: string;
@@ -35,13 +35,18 @@ export class OrderDetailComponent implements OnInit {
 
   constructor(private dataService: DataService, private route: ActivatedRoute,
     private firestore: AngularFirestore, public dialog: MatDialog) {
-      this.route.queryParams.subscribe(params => {
-            this.orderId = params["orderid"];
-      })
+      //this.route.queryParams.subscribe(params => {
+      //      this.orderId = params["orderid"];
+      //})
   }
   
   getOrderItems() {
     if (this.orderId) {
+      
+      this.subscription = this.route.queryParams.subscribe(params => {
+      this.orderId = params["orderid"];
+      })
+      
       this.selectedMenu = null;
       let cityRef = this.firestore.collection('orders');
       cityRef.doc(this.orderId).collection("lines").get().toPromise().then(
@@ -107,6 +112,10 @@ export class OrderDetailComponent implements OnInit {
         }
       }
     });
+  }
+
+  ngOnDestroy () {
+    //this.subscription.unsubscribe();
   }
 
 }

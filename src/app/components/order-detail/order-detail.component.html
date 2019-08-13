@@ -2,12 +2,12 @@
   <table class="table table-hover">
     <thead>
       <tr>
-        <th>Перечень заказа № {{ orderId | json }}</th>
+        <th>Перечень заказа</th>
       </tr>
-      <th>Name</th>
-      <th>Price</th>
-      <th>Qty</th>
-      <th>Discount</th>
+      <th>Название</th>
+      <th>Цена</th>
+      <th>кол-во</th>
+      <th>Дисконт</th>
       <th>Del</th>
     </thead>
     <tbody>
@@ -26,7 +26,7 @@
 
 <span>
   <mat-form-field>
-      <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+      <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Поиск">
   </mat-form-field>
     <mat-form-field>
       <input matInput [(ngModel)]="orderNo" placeholder="Номер стола">

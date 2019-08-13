@@ -5,8 +5,8 @@ import { DataService } from '../../services/data.service';
 import { AngularFirestore } from '@angular/fire/firestore';
 
 import { ActivatedRoute, NavigationEnd }     from '@angular/router';
-import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
-import { Subscription, Observable, Subject }   from 'rxjs';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { Subscription, Observable, Subject } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 export interface DialogData {

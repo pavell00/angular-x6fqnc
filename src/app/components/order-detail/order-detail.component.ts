@@ -61,10 +61,10 @@ export class OrderDetailComponent implements OnInit, AfterContentInit {
   }
  
   onSave() {
-    console.log(this.orderId)
+    //console.log(this.orderId)
     if (this.orderId) {
       this.firestore.collection("orders").doc(this.orderId).set({
-        id: this.orderId,
+        //id: this.orderId,
         OrderDate: this.orderDate, 
         TableNo: this.orderNo,
         sumOrder: this.orderSum,
@@ -73,13 +73,10 @@ export class OrderDetailComponent implements OnInit, AfterContentInit {
         OrderText: 'test check string'
     })
     } else {
-      
-      let newDocRef = this.firestore.collection('orders').doc();
-      console.log('newCityRef id:', newDocRef.ref.id);
-      let docId =  newDocRef.ref.id
-      this.firestore.collection("orders").doc(docId).set({
-      //this.firestore.collection("orders").add({
-        id: docId,
+      //let newDocRef = this.firestore.collection('orders').doc();
+      //console.log('newCityRef id:', newDocRef.ref.id);
+      //let docId =  newDocRef.ref.id
+      this.firestore.collection("orders").add({
         OrderDate: this.orderDate, 
         TableNo: this.orderNo,
         sumOrder: this.orderSum,
@@ -90,7 +87,12 @@ export class OrderDetailComponent implements OnInit, AfterContentInit {
     }
   }
 
-  ngAfterContentInit() { if (this.orderId) {this.getOrderItems2(); this.fillOrderData();}  }
+  ngAfterContentInit() {
+    if (this.orderId) {
+      this.getOrderItems2();
+      this.fillOrderData();
+    } 
+  }
 
   getOrderItems2() {
       if (this.orderId) {

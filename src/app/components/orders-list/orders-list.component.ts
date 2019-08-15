@@ -94,13 +94,10 @@ export class OrderListComponent implements OnInit {
   }
 
   getMarker3(id: string) {
-    console.log(id)
-
-          let navigationExtras: NavigationExtras = {
-            queryParams: { 'orderid': id }
-          };
-          //this.router.navigateByUrl('order-detail', navigationExtras);
-          this.router.navigate(['/order-detail'], navigationExtras);
+    let navigationExtras: NavigationExtras = {
+      queryParams: { 'orderid': id }
+    };
+    this.router.navigate(['/order-detail'], navigationExtras);
   }
 
   getDocName(id: string) {

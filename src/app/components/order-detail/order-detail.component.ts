@@ -73,8 +73,13 @@ export class OrderDetailComponent implements OnInit, AfterContentInit {
         OrderText: 'test check string'
     })
     } else {
-      this.firestore.collection("orders").add({
-        //id: this.orderId,
+      
+      let newDocRef = this.firestore.collection('orders').doc();
+      console.log('newCityRef id:', newDocRef.ref.id);
+      let docId =  newDocRef.ref.id
+      this.firestore.collection("orders").doc(docId).set({
+      //this.firestore.collection("orders").add({
+        id: docId,
         OrderDate: this.orderDate, 
         TableNo: this.orderNo,
         sumOrder: this.orderSum,

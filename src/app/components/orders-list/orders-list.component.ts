@@ -21,7 +21,7 @@ export class OrderListComponent implements OnInit {
 
   ngOnInit(): void {
     //this.onStart();
-    this.displayedColumns = ['TableNo','OrderDate','sumOrder','discountOrder','isDone','Actions'];
+    this.displayedColumns = ['TableNo','OrderDate','sumOrder','discountOrder','isDone','Actions', 'Actions2'];
     this.columnsToDisplay = this.displayedColumns.slice();
     this.dataService.getOrders().subscribe(actionArray => {
       this.orders = actionArray.map(item => {
@@ -70,6 +70,7 @@ export class OrderListComponent implements OnInit {
       result => result.query.where('id', '==', id).get().then(
         q => {
           //console.log(q.docs.map(m => m.id));
+          //console.log(id)
           let docId = q.docs.map(m => m.id);
           let navigationExtras: NavigationExtras = {
             queryParams: { 'orderid': docId[0] }
@@ -90,5 +91,39 @@ export class OrderListComponent implements OnInit {
         }
       )
     )
+  }
+
+  getMarker3(id: string) {
+    console.log(id)
+    let cityRef = this.firestore.collection('orders');
+    let q = cityRef.get().toPromise().then(
+      result => result.query.where('id', '==', id).get().then(
+        q => {
+          //console.log(q.docs.map(m => m.id));
+          //console.log(id)
+          let docId = q.docs.map(m => m.id);
+          let navigationExtras: NavigationExtras = {
+            queryParams: { 'orderid': docId[0] }
+          };
+          //this.router.navigateByUrl('order-detail', navigationExtras);
+          this.router.navigate(['/order-detail'], navigationExtras);
+          /*
+          cityRef.doc(docId[0]).collection("lines").get().toPromise().then(
+              snapshot => {
+                const v = snapshot.docs.map(
+                  w => { 
+                    console.log(w.data())
+                  }
+                )
+              }
+            )
+          */
+        }
+      )
+    )
+  }
+
+  getDocName(id: string) {
+    console.log(this.firestore.collection('orders').doc(id).ref.id )
   }
 }

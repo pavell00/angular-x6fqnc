@@ -61,9 +61,9 @@ export class OrderDetailComponent implements OnInit, AfterContentInit {
   }
  
   onSave() {
-    //console.log(this.orderId)
+    //update existing document
     if (this.orderId) {
-      this.firestore.collection("orders").doc(this.orderId).set({
+      this.firestore.collection('orders').doc(this.orderId).update({
         //id: this.orderId,
         OrderDate: this.orderDate, 
         TableNo: this.orderNo,
@@ -71,12 +71,11 @@ export class OrderDetailComponent implements OnInit, AfterContentInit {
         discountOrder: this.orderDiscount,
         isDone: true,
         OrderText: 'test check string'
-    })
+    });
+    //this.firestore.collection('orders').doc(this.orderId).collection('lines')
     } else {
-      //let newDocRef = this.firestore.collection('orders').doc();
-      //console.log('newCityRef id:', newDocRef.ref.id);
-      //let docId =  newDocRef.ref.id
-      this.firestore.collection("orders").add({
+      //add new document
+      this.firestore.collection('orders').add({
         OrderDate: this.orderDate, 
         TableNo: this.orderNo,
         sumOrder: this.orderSum,
@@ -85,6 +84,7 @@ export class OrderDetailComponent implements OnInit, AfterContentInit {
         OrderText: 'test check string'
       })
     }
+    this.storeOrderItems();
   }
 
   ngAfterContentInit() {
@@ -92,6 +92,35 @@ export class OrderDetailComponent implements OnInit, AfterContentInit {
       this.getOrderItems2();
       this.fillOrderData();
     } 
+  }
+
+  storeOrderItems() {
+    //clear data in subcollection
+    this.firestore.collection('orders').doc(this.orderId).collection('lines').ref.get().then(
+      snapshot => {snapshot.docs.forEach( d => {
+        d.ref.delete()
+        }
+      )}
+    )
+    //add item to subcollection
+    let i=1;
+    this.selectedMenu.forEach(
+      item => {
+        this.firestore.collection('orders').doc(this.orderId).collection('lines').add({
+          line_no: i,
+          name: item.name,
+          price: item.price,
+          qty: item.qty,
+          discount: item.discount
+        })
+        i++;
+      }
+    )
+    
+     
+       
+      
+    
   }
 
   getOrderItems2() {

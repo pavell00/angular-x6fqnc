@@ -95,32 +95,12 @@ export class OrderListComponent implements OnInit {
 
   getMarker3(id: string) {
     console.log(id)
-    let cityRef = this.firestore.collection('orders');
-    let q = cityRef.get().toPromise().then(
-      result => result.query.where('id', '==', id).get().then(
-        q => {
-          //console.log(q.docs.map(m => m.id));
-          //console.log(id)
-          let docId = q.docs.map(m => m.id);
+
           let navigationExtras: NavigationExtras = {
-            queryParams: { 'orderid': docId[0] }
+            queryParams: { 'orderid': id }
           };
           //this.router.navigateByUrl('order-detail', navigationExtras);
           this.router.navigate(['/order-detail'], navigationExtras);
-          /*
-          cityRef.doc(docId[0]).collection("lines").get().toPromise().then(
-              snapshot => {
-                const v = snapshot.docs.map(
-                  w => { 
-                    console.log(w.data())
-                  }
-                )
-              }
-            )
-          */
-        }
-      )
-    )
   }
 
   getDocName(id: string) {

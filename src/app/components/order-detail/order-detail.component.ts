@@ -71,20 +71,23 @@ export class OrderDetailComponent implements OnInit, AfterContentInit {
         discountOrder: this.orderDiscount,
         isDone: true,
         OrderText: 'test check string'
-    });
+      });
+      this.storeOrderItems(this.orderId);
     //this.firestore.collection('orders').doc(this.orderId).collection('lines')
     } else {
       //add new document
-      this.firestore.collection('orders').add({
+      let res = this.firestore.collection('orders').add({
         OrderDate: this.orderDate, 
         TableNo: this.orderNo,
         sumOrder: this.orderSum,
         discountOrder: this.orderDiscount,
         isDone: true,
         OrderText: 'test check string'
-      })
+      }).then(
+        (w) => {this.storeOrderItems( w.id)}
+      )
+     
     }
-    this.storeOrderItems();
   }
 
   ngAfterContentInit() {
@@ -94,9 +97,9 @@ export class OrderDetailComponent implements OnInit, AfterContentInit {
     } 
   }
 
-  storeOrderItems() {
+  storeOrderItems(id: string) {
     //clear data in subcollection
-    this.firestore.collection('orders').doc(this.orderId).collection('lines').ref.get().then(
+    this.firestore.collection('orders').doc(id).collection('lines').ref.get().then(
       snapshot => {snapshot.docs.forEach( d => {
         d.ref.delete()
         }

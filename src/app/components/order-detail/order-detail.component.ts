@@ -59,7 +59,7 @@ export class OrderDetailComponent implements OnInit, AfterContentInit {
     });
 
   }
- 
+
   onSave() {
     //update existing document
     if (this.orderId) {

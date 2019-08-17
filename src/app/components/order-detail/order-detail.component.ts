@@ -30,10 +30,10 @@ export class OrderDetailComponent implements OnInit, AfterContentInit {
   subscription: Subscription;
 
   orderDate: string = new Date().toLocaleString();
-  orderNo: string;
+  orderNo: string = 'Стол № 1';
   orderId: string;
-  orderSum: number;
-  orderDiscount: number;
+  orderSum: number = 0;
+  orderDiscount: number = 0;
   orderIsDone: boolean;
 
   newData: any;

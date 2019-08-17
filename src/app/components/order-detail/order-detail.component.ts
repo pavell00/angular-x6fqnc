@@ -84,7 +84,11 @@ export class OrderDetailComponent implements OnInit, AfterContentInit {
         isDone: true,
         OrderText: 'test check string'
       }).then(
-        (w) => {this.storeOrderItems( w.id)}
+        (w) => {
+          this.orderId = w.id;
+          this.storeOrderItems(w.id);
+          //console.log(w.id)
+          }
       )
      
     }
@@ -98,17 +102,26 @@ export class OrderDetailComponent implements OnInit, AfterContentInit {
   }
 
   storeOrderItems(id: string) {
-    //clear data in subcollection
-    this.firestore.collection('orders').doc(id).collection('lines').ref.get().then(
-      snapshot => {snapshot.docs.forEach( d => {
-        d.ref.delete()
-        }
-      )}
-    )
+    //clear data in subcollection if exists
+    //console.log(this.selectedMenu)
+    //this.firestore.collection('orders').doc(id).collection('lines').get().toPromise().then(
+    //  query => { console.log(query.size);
+    //    if (query.size > 0) {
+          this.firestore.collection('orders').doc(id).collection('lines').get().toPromise().then(
+          snapshot => {snapshot.forEach( d => {
+           //.docs.forEach( d => {
+              d.ref.delete()
+            }
+          )}
+        )
+     // }
+    //})
+    //console.log(this.selectedMenu)
     //add item to subcollection
     let i=1;
     this.selectedMenu.forEach(
       item => {
+        //console.log(item);
         this.firestore.collection('orders').doc(this.orderId).collection('lines').add({
           line_no: i,
           name: item.name,

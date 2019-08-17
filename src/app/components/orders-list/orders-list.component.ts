@@ -21,7 +21,7 @@ export class OrderListComponent implements OnInit {
 
   ngOnInit(): void {
     //this.onStart();
-    this.displayedColumns = ['TableNo','OrderDate','sumOrder','discountOrder','isDone','Actions', 'Actions2'];
+    this.displayedColumns = ['TableNo','OrderDate','sumOrder','discountOrder','isDone','Actions'];
     this.columnsToDisplay = this.displayedColumns.slice();
     this.dataService.getOrders().subscribe(actionArray => {
       this.orders = actionArray.map(item => {

@@ -90,7 +90,7 @@ export class OrderDetailComponent implements OnInit, AfterContentInit {
           //console.log(w.id)
           }
       )
-     
+      //this.storeOrderItems(this.orderId);
     }
   }
 
@@ -102,7 +102,7 @@ export class OrderDetailComponent implements OnInit, AfterContentInit {
   }
 
   storeOrderItems(id: string) {
-    //clear data in subcollection if exists
+    //clear data in subcollection
     //console.log(this.selectedMenu)
     //this.firestore.collection('orders').doc(id).collection('lines').get().toPromise().then(
     //  query => { console.log(query.size);
@@ -122,7 +122,7 @@ export class OrderDetailComponent implements OnInit, AfterContentInit {
     this.selectedMenu.forEach(
       item => {
         //console.log(item);
-        this.firestore.collection('orders').doc(this.orderId).collection('lines').add({
+        this.firestore.collection('orders').doc(id).collection('lines').add({
           line_no: i,
           name: item.name,
           price: item.price,
@@ -132,11 +132,7 @@ export class OrderDetailComponent implements OnInit, AfterContentInit {
         i++;
       }
     )
-    
-     
-       
-      
-    
+
   }
 
   getOrderItems2() {

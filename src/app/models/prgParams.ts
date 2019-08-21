@@ -1,6 +1,4 @@
 export class prgParams {
-  cassir: string;
-  waiter: string;
   headerStr1: string;
   headerStr2: string;
   headerStr3: string;

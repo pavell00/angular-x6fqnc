@@ -46,7 +46,7 @@ export class OrderListComponent implements OnInit {
   }*/
 
   onCreateOrder() {
-    this.router.navigateByUrl('order-detail');
+    this.router.navigateByUrl('order-create');
   }
 
   getMarker(id: string) {

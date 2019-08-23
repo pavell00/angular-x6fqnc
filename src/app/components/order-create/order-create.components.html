@@ -1,0 +1,18 @@
+<mat-form-field>
+    <input matInput [(ngModel)]="orderNo" placeholder="Номер стола">
+</mat-form-field>
+<mat-form-field>
+    <input matInput [(ngModel)]="orderDate" placeholder="Дата / время стола">
+</mat-form-field>
+<mat-form-field style="text-align: right;">
+    <input matInput [(ngModel)]="orderDiscount" placeholder="Дисконт">
+</mat-form-field>
+<mat-form-field style="text-align: right;">
+    <input matInput [(ngModel)]="orderGuests" placeholder="Гостей">
+</mat-form-field>
+<mat-form-field style="text-align: right;">
+    <input matInput [(ngModel)]="orderCheck" placeholder="№ чека">
+</mat-form-field>
+<div>
+  <button mat-button (click)="onSave()">Save</button>
+</div>

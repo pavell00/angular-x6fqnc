@@ -32,7 +32,7 @@
       <input matInput [(ngModel)]="orderNo" placeholder="Номер стола">
   </mat-form-field>
   <mat-form-field>
-      <input matInput [(ngModel)]="orderDate" placeholder="Дата/время стола">
+      <input matInput [(ngModel)]="orderDate" placeholder="Дата / время стола">
   </mat-form-field>
   <mat-form-field style="text-align: right;">
       <input matInput [(ngModel)]="orderSum" placeholder="Сумма">
@@ -83,5 +83,3 @@
   <tr mat-row *matRowDef="let row; columns: displayedColumns;">
   </tr>
 </table>
-
-{{testData | json}}

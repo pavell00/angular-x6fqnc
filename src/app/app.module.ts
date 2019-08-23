@@ -22,12 +22,14 @@ import { OrderDetailComponent, DialogOverviewExampleDialog } from './components/
 import { MenuListComponent } from './components/menu-list/menu-list.component';
 import { OrderListComponent } from './components/orders-list/orders-list.component';
 import { MenuItemCreateComponent } from './components/menuItem-create/menuItem-create.component';
+import { OrderCreateComponent } from './components/order-create/order-create.components';
 
 @NgModule({
   declarations: [ 
     AppComponent,
     OrderDetailComponent, DialogOverviewExampleDialog,
-    MenuListComponent, OrderListComponent, MenuItemCreateComponent
+    MenuListComponent, OrderListComponent, MenuItemCreateComponent,
+    OrderCreateComponent
     ],
   imports:      [ 
     BrowserModule,

@@ -13,6 +13,8 @@
     "@angular/platform-browser": "^8.0.0",
     "@angular/platform-browser-dynamic": "^8.0.0",
     "@angular/router": "^8.0.0",
+    "@angular/fire": "^5.2.1",
+    "copy-to-clipboard": "3.2.0",
     "core-js": "2",
     "firebase": "^6.3.4",
     "hammerjs": "^2.0.8",

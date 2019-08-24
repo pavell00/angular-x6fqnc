@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, NavigationExtras } from '@angular/router';
-//import * as copy from 'copy-to-clipboard';
 import copy from 'copy-to-clipboard';
 import { Order } from '../../models/order';
 import { DataService } from '../../services/data.service';
@@ -46,7 +45,7 @@ export class OrderListComponent implements OnInit {
   }
 
   createPrintForm(id: string) {
-    copy('TEST Text');
+    copy('TEST Text ' + id);
   }
 
   delteOrder(id: string) {

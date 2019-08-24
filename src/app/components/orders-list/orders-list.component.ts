@@ -44,8 +44,12 @@ export class OrderListComponent implements OnInit {
     this.router.navigate(['/order-detail'], navigationExtras);
   }
 
-  createPrintForm() {
+  createPrintForm(id: string) {
     
+  }
+
+  delteOrder(id: string) {
+
   }
 
   getDocName(id: string) {

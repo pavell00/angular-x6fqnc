@@ -35,9 +35,9 @@ export class MenuListComponent implements OnInit {
   }
 
   onDelete(id: string) {
-    if (confirm("Are you sure to delete this record?")) {
+    if (confirm("вы уверенны что хотите удалить запись?")) {
       this.firestore.doc('menulist/' + id).delete();
-      this.toastr.warning('Deleted successfully','EMP. Register');
+      this.toastr.warning('Запись удалена','EMP. Register');
     }
   }
 

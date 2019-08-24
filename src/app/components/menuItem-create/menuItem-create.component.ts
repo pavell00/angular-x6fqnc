@@ -28,12 +28,6 @@ export class MenuItemCreateComponent implements OnInit {
         this.getMaxId();
     }
 
-    addPhrase () {
-        let newPhrase = new menuItem();
-        newPhrase.id = '1';
-
-    }
-
     getMaxId() {
         //this.dataService.getMaxIdFromItems().subscribe(
         //    data => (this.id = data + 1)
@@ -44,7 +38,7 @@ export class MenuItemCreateComponent implements OnInit {
       if (form != null)
         form.resetForm();
         this.formData = {
-        id: null,
+        //id: null,
         name: '',
         price: 10,
         qty: 1,

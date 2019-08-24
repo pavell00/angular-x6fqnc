@@ -12,7 +12,7 @@ import { Order } from '../../models/order';
 })
 export class OrderCreateComponent implements OnInit {
     newOrder: Order;
-    orderDate: string = new Date().toLocaleString();
+    orderDate: string = new Date().toLocaleString('ru');
     orderNo: string = 'Стол № 1';
     orderSum: number = 0;
     orderDiscount: number = 0;

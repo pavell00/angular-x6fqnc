@@ -170,12 +170,12 @@ export class OrderDetailComponent implements OnInit, AfterContentInit {
   }
 
   onDelete(id: string) {
-    //console.log(id)
-    for(let i = 0; i < this.selectedMenu.length; i++) {
+    console.log(id, this.selectedMenu)
+  /*  for(let i = 0; i < this.selectedMenu.length; i++) {
       if(this.selectedMenu[i].id == id) {
         this.selectedMenu.splice(i, 1);
       }
-    }
+    }*/
   }
 
   applyFilter(filterValue: string) {

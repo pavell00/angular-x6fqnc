@@ -41,7 +41,7 @@
               <mat-icon class="md-18">arrow_back</mat-icon>
             </a>
           </button>
-          <button mat-mini-fab aria-label="Example icon-button with a heart icon" (click)="getMarker3(element.id)">
+          <button mat-mini-fab aria-label="Example icon-button with a heart icon" (click)="createPrintForm(element.id)">
             <a mat-mini-fab >
               <mat-icon class="md-18">home</mat-icon>
             </a>
@@ -56,17 +56,3 @@
 <div>
   <button mat-mini-fab color="primary" (click)="onCreateOrder()"><mat-icon>add</mat-icon></button>
 </div>
-
-<!--<p>{{phrasesFiltered | json}}</p>
-<p>{{ displayedColumns }}</p>
-<p>{{ columnsToDisplay }}</p>-->
-
-<!--<tbody>
-  <tr *ngFor="let emp of orders">
-    <td (click)="onEdit(emp)">{{emp.id}} - {{emp.TableNo}}</td>
-    <td (click)="onEdit(emp)">{{emp.OrderDate}}</td>
-    <td (click)="onEdit(emp)">{{emp.isDone}}</td>
-    <td (click)="onEdit(emp)">{{emp.OrderText}}</td>
-    <td><a class="btn text-danger" (click)="onDelete(emp.id)"><i class="fa fa-trash"></i></a></td>
-  </tr>
-</tbody>-->

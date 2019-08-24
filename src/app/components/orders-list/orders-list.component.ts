@@ -20,7 +20,6 @@ export class OrderListComponent implements OnInit {
   constructor(private dataService: DataService, private router : Router,private firestore: AngularFirestore, private toastr:ToastrService) { }
 
   ngOnInit(): void {
-    //this.onStart();
     this.displayedColumns = ['TableNo','OrderDate','sumOrder','discountOrder','isDone','Actions'];
     this.columnsToDisplay = this.displayedColumns.slice();
     this.dataService.getOrders().subscribe(actionArray => {
@@ -34,63 +33,8 @@ export class OrderListComponent implements OnInit {
     //console.log(this.orders);
   }
 
-  /*
-  onStart() {
-    this.displayedColumns = ['TableNo','OrderDate', 'isDone'];
-    this.columnsToDisplay = this.displayedColumns.slice();
-    this.dataService.getOrders() //getPhrases()
-    .subscribe(
-      data => { this.orders = data }
-      //data => { this.phrasesFiltered  = data }
-    )
-  }*/
-
   onCreateOrder() {
     this.router.navigateByUrl('order-create');
-  }
-
-  getMarker(id: string) {
-    let cityRef = this.firestore.collection('orders').doc('EL6gKdzdTzuIozrdFwr4');
-    let getDoc = cityRef.get().toPromise()
-    .then(doc => {
-      if (!doc.exists) {
-        console.log('No such document!');
-      } else {
-        console.log('Document data:', doc.data());
-      }
-    })
-    .catch(err => {
-      console.log('Error getting document', err);
-    });
-  }
-
-  getMarker2(id: string) {
-    let cityRef = this.firestore.collection('orders');
-    let q = cityRef.get().toPromise().then(
-      result => result.query.where('id', '==', id).get().then(
-        q => {
-          //console.log(q.docs.map(m => m.id));
-          //console.log(id)
-          let docId = q.docs.map(m => m.id);
-          let navigationExtras: NavigationExtras = {
-            queryParams: { 'orderid': docId[0] }
-          };
-          //this.router.navigateByUrl('order-detail', navigationExtras);
-          this.router.navigate(['/order-detail'], navigationExtras);
-          /*
-          cityRef.doc(docId[0]).collection("lines").get().toPromise().then(
-              snapshot => {
-                const v = snapshot.docs.map(
-                  w => { 
-                    console.log(w.data())
-                  }
-                )
-              }
-            )
-          */
-        }
-      )
-    )
   }
 
   editOrder(id: string) {
@@ -98,6 +42,10 @@ export class OrderListComponent implements OnInit {
       queryParams: { 'orderid': id }
     };
     this.router.navigate(['/order-detail'], navigationExtras);
+  }
+
+  createPrintForm() {
+    
   }
 
   getDocName(id: string) {

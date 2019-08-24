@@ -93,7 +93,7 @@ export class OrderListComponent implements OnInit {
     )
   }
 
-  getMarker3(id: string) {
+  editOrder(id: string) {
     let navigationExtras: NavigationExtras = {
       queryParams: { 'orderid': id }
     };

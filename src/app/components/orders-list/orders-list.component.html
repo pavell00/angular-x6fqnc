@@ -36,11 +36,16 @@
   <ng-container matColumnDef="Actions">
       <th mat-header-cell *matHeaderCellDef>Actions</th>
       <td mat-cell *matCellDef="let element">
+          <button mat-mini-fab aria-label="Example icon-button with a heart icon" (click)="editOrder(element.id)">
+            <a mat-mini-fab >
+              <mat-icon class="md-18">arrow_back</mat-icon>
+            </a>
+          </button>
           <button mat-mini-fab aria-label="Example icon-button with a heart icon" (click)="getMarker3(element.id)">
-              <a mat-mini-fab >
-                <mat-icon class="md-18">arrow_back</mat-icon>
-              </a>
-            </button>
+            <a mat-mini-fab >
+              <mat-icon class="md-18">home</mat-icon>
+            </a>
+          </button>
       </td>
     </ng-container>
 

@@ -3,7 +3,7 @@ import { Order } from '../../models/order';
 import { menuItem } from '../../models/menuItem';
 import { DataService } from '../../services/data.service';
 import { AngularFirestore } from '@angular/fire/firestore';
-
+import { ToastrService } from 'ngx-toastr';
 import { ActivatedRoute, NavigationEnd }     from '@angular/router';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Subscription, Observable, Subject } from 'rxjs';
@@ -40,7 +40,7 @@ export class OrderDetailComponent implements OnInit, AfterContentInit {
   testData: any
 
   constructor(private dataService: DataService, private route: ActivatedRoute,
-    private firestore: AngularFirestore, public dialog: MatDialog) {
+    private firestore: AngularFirestore, public dialog: MatDialog, private toastr: ToastrService) {
 
   }
   
@@ -73,6 +73,7 @@ export class OrderDetailComponent implements OnInit, AfterContentInit {
         OrderText: 'test check string'
       });
       this.storeOrderItems(this.orderId);
+      this.toastr.success('Заказ обновлен', 'EMP. Register');
     //this.firestore.collection('orders').doc(this.orderId).collection('lines')
     } else {
       //add new document

@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { DataService } from '../../services/data.service';
-import { NgForm } from '@angular/forms';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { ToastrService } from 'ngx-toastr';
 import { Order } from '../../models/order';
@@ -19,18 +18,35 @@ export class OrderCreateComponent implements OnInit {
     orderIsDone: boolean = false;
     orderGuests: number = 1;
     orderPrintTime: string = '0:00';
-    orderCheck: string = '001';
+    orderCheck: number = 1;
 
     constructor(private dataService: DataService,
     private firestore: AngularFirestore,
     private toastr: ToastrService) { }
 
     ngOnInit(): void {
-        //this.dataService.items.subscribe(res => this.list = res)
       this.orderDate = this.orderDate.substring(0, this.orderDate.length-3);
     }
 
     onSave() {
-      
+      //add new document
+      let res = this.firestore.collection('orders').add({
+        OrderDate: this.orderDate, 
+        TableNo: this.orderNo,
+        sumOrder: this.orderSum,
+        discountOrder: this.orderDiscount,
+        isDone: false,
+        OrderText: '',
+        guests: this.orderGuests,
+        check: this.orderCheck,
+        printTime: this.orderPrintTime
+      }).then(
+        (w) => {
+          //this.orderId = w.id;
+          //this.storeOrderItems(w.id);
+          //console.log(w.id)
+          this.toastr.success('Заказ создан', 'EMP. Register');
+          }
+      )
     }
 }

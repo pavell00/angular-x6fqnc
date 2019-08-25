@@ -89,27 +89,45 @@ export class OrderListComponent implements OnInit {
     //05.07.19      открыт 20:30    печать 00:05
     
     this.dataService.getParams().get().toPromise().then(
-            doc => {//console.log("params data:", doc.data())
-              this.header  =  doc.data().headerStr1+'\n';
-              this.header +=  doc.data().headerStr2+'\n';
-              this.header +=  doc.data().headerStr3+'\n';
+            param => {//console.log("params data:", doc.data())
+              this.header  =  param.data().headerStr1+'\n';
+              this.header +=  param.data().headerStr2+'\n';
+              this.header +=  param.data().headerStr3+'\n';
               this.dataService.getOrder(id).get().toPromise().then(
-              doc1 => {//console.log("document data:", doc1.data())
-                  this.strLine4 = 'Чек '+doc1.data().check+'Стол # '+doc1.data().TableNo + 'Гостей ' +doc1.data().guests+'\n';
-                  this.strLine5 =  doc1.data().OrderDate+'открыт '+doc1.data().OrderDate+'печать '+doc1.data().printTime+'\n';
+              order => {//console.log("document data:", doc1.data())
+                  //4-th check's line 
+                  let check: string = order.data().check.toString();
+                  let TableNo: string = order.data().TableNo;
+                  let guests: string = order.data().guests.toString();
+                  this.strLine4 = param.data().headerStr4+this.addSpace(check, 8, 'af')+'Стол # '+this.addSpace(TableNo, 12, 'af') + 'Гостей '+order.data().guests+'\n';
+                  //5-th check's line 
+                  this.strLine5 = order.data().OrderDate+'открыт '+order.data().OrderDate+'печать '+order.data().printTime+'\n';
                   //console.log(this.strLine4, this.strLine5)
                   this.header +=  this.strLine4;
                   this.header +=  this.strLine5;
-                  this.header +=  doc.data().headerStr6+'\n';
-                  this.header +=  doc.data().headerStr7+'\n';
-                  this.header +=  doc.data().tableHeader1+'\n';
-                  this.header +=  doc.data().lineStr+'\n';
+                  this.header +=  param.data().headerStr6+'\n';
+                  this.header +=  param.data().headerStr7+'\n';
+                  this.header +=  param.data().tableHeader1+'\n';
+                  this.header +=  param.data().lineStr+'\n';
                   //console.log(this.header)
                   copy(this.header);
                 }
               )
             }
     )
+  }
+
+  addSpace(txt: string, needLenght: number, key: string) {
+    if ((txt.length) < needLenght) {
+      //console.log(txt + ' '.repeat(needLenght - (txt.length)))
+      if (key == 'af') {
+        return  txt + ' '.repeat(needLenght - (txt.length));
+      } else {
+        return  ' '.repeat(needLenght - (txt.length)) + txt;
+      }
+      
+    }
+    return txt;
   }
 
   delteOrder(id: string) {

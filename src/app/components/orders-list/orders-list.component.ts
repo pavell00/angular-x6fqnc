@@ -48,7 +48,7 @@ export class OrderListComponent implements OnInit {
   }
 
   createPrintForm(id: string) {
-    this.makeHeader(id);
+    this.makeHeader2(id);
     
   }
 
@@ -82,6 +82,34 @@ export class OrderListComponent implements OnInit {
     promise.then(
       res => {console.log(this.header);
     });
+  }
+
+  makeHeader2(id: string) {
+    //Чек # 192264  стол # VIP005       Гостей 4
+    //05.07.19      открыт 20:30    печать 00:05
+    
+    this.dataService.getParams().get().toPromise().then(
+            doc => {//console.log("params data:", doc.data())
+              this.header  =  doc.data().headerStr1+'\n';
+              this.header +=  doc.data().headerStr2+'\n';
+              this.header +=  doc.data().headerStr3+'\n';
+              this.dataService.getOrder(id).get().toPromise().then(
+              doc1 => {//console.log("document data:", doc1.data())
+                  this.strLine4 = 'Чек '+doc1.data().check+'Стол # '+doc1.data().TableNo + 'Гостей ' +doc1.data().guests+'\n';
+                  this.strLine5 =  doc1.data().OrderDate+'открыт '+doc1.data().OrderDate+'печать '+doc1.data().printTime+'\n';
+                  //console.log(this.strLine4, this.strLine5)
+                  this.header +=  this.strLine4;
+                  this.header +=  this.strLine5;
+                  this.header +=  doc.data().headerStr6+'\n';
+                  this.header +=  doc.data().headerStr7+'\n';
+                  this.header +=  doc.data().tableHeader1+'\n';
+                  this.header +=  doc.data().lineStr+'\n';
+                  //console.log(this.header)
+                  copy(this.header);
+                }
+              )
+            }
+    )
   }
 
   delteOrder(id: string) {

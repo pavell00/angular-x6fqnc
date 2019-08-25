@@ -5,6 +5,7 @@ import { Order } from '../../models/order';
 import { DataService } from '../../services/data.service';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { ToastrService } from 'ngx-toastr';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'orders-list',
@@ -13,9 +14,9 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class OrderListComponent implements OnInit {
   orders: Order[] = [];
-  
   displayedColumns: string[] = [];
   columnsToDisplay: string[] = [];
+  header: string;
 
   constructor(private dataService: DataService, private router : Router,private firestore: AngularFirestore, private toastr:ToastrService) { }
 
@@ -45,7 +46,31 @@ export class OrderListComponent implements OnInit {
   }
 
   createPrintForm(id: string) {
-    copy('TEST Text ' + id);
+    this.makeHeader();
+    
+  }
+
+  makeHeader() {
+    this.dataService.getParams().get().toPromise().then(
+      doc => {//console.log("params data:", doc.data())
+        this.header  =  doc.data().headerStr1+'\n';
+        this.header +=  doc.data().headerStr2+'\n';
+        this.header +=  doc.data().headerStr3+'\n';
+        this.header +=  doc.data().headerStr4+'\n';
+        this.header +=  doc.data().headerStr5+'\n';
+        this.header +=  doc.data().headerStr6+'\n';
+        this.header +=  doc.data().headerStr7+'\n';
+        this.header +=  doc.data().tableHeader1+'\n';
+        this.header +=  doc.data().lineStr+'\n';
+        
+        /*this.orderNo = doc.data().TableNo;
+        this.orderDate = doc.data().OrderDate;
+        this.orderIsDone = doc.data().isDone;
+        this.orderSum = doc.data().sumOrder;
+        this.orderDiscount = doc.data().discountOrder;*/
+        copy(this.header);
+      }
+    )
   }
 
   delteOrder(id: string) {

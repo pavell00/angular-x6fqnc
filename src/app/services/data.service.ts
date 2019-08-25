@@ -26,6 +26,10 @@ export class DataService {
     return this.firestore.collection('orders').snapshotChanges();
   }
 
+  getParams() {
+    return this.firestore.collection('prgparams').doc('1');
+  }
+
   getSubCollection(id: string) {
     return this.firestore.collection('orders').doc(id).collection("lines").snapshotChanges();
   }

@@ -99,7 +99,7 @@ export class OrderListComponent implements OnInit {
                   let check: string = order.data().check.toString();
                   let TableNo: string = order.data().TableNo;
                   let guests: string = order.data().guests.toString();
-                  this.strLine4 = param.data().headerStr4+this.addSpace(check, 8, 'af')+'стол # '+this.addSpace(TableNo, 12, 'af') + 'Гостей '+order.data().guests+'\n';
+                  this.strLine4 = param.data().headerStr4+this.addSpace(check, 8, 'af')+'стол # '+this.addSpace(TableNo, 12, 'af') + 'Гостей '+this.addSpace(guests, 2, 'pr')+'\n';
                   //5-th check's line
                   let orderDate: string
                   let str: string = order.data().OrderDate;

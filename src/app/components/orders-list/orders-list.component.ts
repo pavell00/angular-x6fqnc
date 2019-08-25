@@ -17,6 +17,8 @@ export class OrderListComponent implements OnInit {
   displayedColumns: string[] = [];
   columnsToDisplay: string[] = [];
   header: string;
+  strLine4: string;
+  strLine5: string;
 
   constructor(private dataService: DataService, private router : Router,private firestore: AngularFirestore, private toastr:ToastrService) { }
 
@@ -46,31 +48,40 @@ export class OrderListComponent implements OnInit {
   }
 
   createPrintForm(id: string) {
-    this.makeHeader();
+    this.makeHeader(id);
     
   }
 
-  makeHeader() {
-    this.dataService.getParams().get().toPromise().then(
-      doc => {//console.log("params data:", doc.data())
-        this.header  =  doc.data().headerStr1+'\n';
-        this.header +=  doc.data().headerStr2+'\n';
-        this.header +=  doc.data().headerStr3+'\n';
-        this.header +=  doc.data().headerStr4+'\n';
-        this.header +=  doc.data().headerStr5+'\n';
-        this.header +=  doc.data().headerStr6+'\n';
-        this.header +=  doc.data().headerStr7+'\n';
-        this.header +=  doc.data().tableHeader1+'\n';
-        this.header +=  doc.data().lineStr+'\n';
-        
-        /*this.orderNo = doc.data().TableNo;
-        this.orderDate = doc.data().OrderDate;
-        this.orderIsDone = doc.data().isDone;
-        this.orderSum = doc.data().sumOrder;
-        this.orderDiscount = doc.data().discountOrder;*/
-        copy(this.header);
-      }
+  makeHeader(id: string) {
+    //Чек # 192264  стол # VIP005       Гостей 4
+    //05.07.19      открыт 20:30    печать 00:05
+    
+    let p1 = this.dataService.getOrder(id).get().toPromise().then(
+            doc => {//console.log("document data:", doc.data())
+              this.strLine4 = 'Чек '+doc.data().check+'Стол # '+doc.data().TableNo + 'Гостей ' +doc.data().guests+'\n';
+              this.strLine5 =  doc.data().OrderDate+'открыт '+doc.data().OrderDate+'печать '+doc.data().printTime+'\n';
+              console.log(this.strLine4, this.strLine5)
+            }
     )
+
+    let p2 = this.dataService.getParams().get().toPromise().then(
+            doc => {//console.log("params data:", doc.data())
+              this.header  =  doc.data().headerStr1+'\n';
+              this.header +=  doc.data().headerStr2+'\n';
+              this.header +=  doc.data().headerStr3+'\n';
+              this.header +=  this.strLine4;
+              this.header +=  this.strLine5;
+              this.header +=  doc.data().headerStr6+'\n';
+              this.header +=  doc.data().headerStr7+'\n';
+              this.header +=  doc.data().tableHeader1+'\n';
+              this.header +=  doc.data().lineStr+'\n';
+            }
+    )
+
+    let promise = Promise.all([p1, p2])
+    promise.then(
+      res => {console.log(this.header);
+    });
   }
 
   delteOrder(id: string) {

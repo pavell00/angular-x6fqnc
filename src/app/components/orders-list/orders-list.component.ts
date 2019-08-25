@@ -95,13 +95,18 @@ export class OrderListComponent implements OnInit {
               this.header +=  param.data().headerStr3+'\n';
               this.dataService.getOrder(id).get().toPromise().then(
               order => {//console.log("document data:", doc1.data())
-                  //4-th check's line 
+                  //4-th check's line
                   let check: string = order.data().check.toString();
                   let TableNo: string = order.data().TableNo;
                   let guests: string = order.data().guests.toString();
-                  this.strLine4 = param.data().headerStr4+this.addSpace(check, 8, 'af')+'Стол # '+this.addSpace(TableNo, 12, 'af') + 'Гостей '+order.data().guests+'\n';
-                  //5-th check's line 
-                  this.strLine5 = order.data().OrderDate+'открыт '+order.data().OrderDate+'печать '+order.data().printTime+'\n';
+                  this.strLine4 = param.data().headerStr4+this.addSpace(check, 8, 'af')+'стол # '+this.addSpace(TableNo, 12, 'af') + 'Гостей '+order.data().guests+'\n';
+                  //5-th check's line
+                  let orderDate: string
+                  let str: string = order.data().OrderDate;
+                  orderDate = str.slice(0, 5)+'.'+str.slice(8, 10);
+                  let orderTime: string = order.data().OrderDate;
+                  orderTime = orderTime.slice(12);
+                  this.strLine5 = orderDate +'      открыт '+orderTime+'    печать '+order.data().printTime+'\n';
                   //console.log(this.strLine4, this.strLine5)
                   this.header +=  this.strLine4;
                   this.header +=  this.strLine5;

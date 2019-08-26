@@ -136,21 +136,20 @@ export class OrderListComponent implements OnInit {
 
                     } else {
                       let qty: string;
-                      let sum: string;
                       let space_qty: string = '   ';
+                      let space_sum: string = '       ';
                       if (item.qty >= 10 && item.qty <= 99) {space_qty = '  '}
                       if (item.qty > 99) {space_qty = ' '};
                       qty = item.qty.toString(); //default value
                       let sSum: number = item.qty * item.price;
-                      sum = sSum.toString();
+                      let sum = sSum.toString();
                       if (this.isInt(item.qty)) { qty = item.qty.toString()+'.00';}
-                      //if (item.qty <= 9) {qty = '   '+qty} else {qty = '  '+qty}
-                      //if (sSum <= 9) {qty = '   '+qty} else {qty = '  '+qty}
                       if (this.isInt(sSum)) { sum += '.00';}
-                      if (sSum >= 100) {sum = '     '+sum} else {sum = '      '+sum}
+                      if (sSum >= 10 && item.qty <= 99) {space_sum = '      '}
+                      if (sSum >= 100) {space_sum = '     '}
                       //this.printRows.push(i, this.addSpace(item.name, this.maxLengthFoodName, 'af'), qty, sum, '0')
                       this.header += this.addSpace(item.name, this.maxLengthFoodName, 'af')+
-                      space_qty+qty+sum+'\n'
+                      space_qty+qty+space_sum+sum+'\n'
                     }
                     ++i;
                   }

@@ -3,7 +3,7 @@ import { Router, NavigationExtras } from '@angular/router';
 import copy from 'copy-to-clipboard';
 import { Order } from '../../models/order';
 import { menuItem } from '../../models/menuItem';
-import { PrintRow } from '../../models/printRow';
+import { PrintRow } from '../../models/printRows';
 import { DataService } from '../../services/data.service';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { ToastrService } from 'ngx-toastr';
@@ -138,9 +138,10 @@ export class OrderListComponent implements OnInit {
             } else {
               this.printRows.push(i,
                 this.addSpace(item.name, this.maxLengthFoodName, 'af'),
-                item.qty,
-                item.price*item.qty,
-                0
+                
+                item.qty.toString(),
+                (item.price*item.qty).toString(),
+                '0'
                 )
             }
             ++i;
@@ -172,5 +173,9 @@ export class OrderListComponent implements OnInit {
 
   getDocName(id: string) {
     console.log(this.firestore.collection('orders').doc(id).ref.id )
+  }
+
+  function isInt(n) {
+    return n % 1 === 0;
   }
 }

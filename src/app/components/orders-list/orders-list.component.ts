@@ -132,9 +132,22 @@ export class OrderListComponent implements OnInit {
                 let i: number = 0;
                 arrOrderDetails.forEach(
                   item => {
-                    if (item.name.length > this.maxLengthFoodName) {
 
-                    } else {
+
+                    if (item.name.length > this.maxLengthFoodName) { // if name of food needed to split
+                      let partNameToOut: string = '';
+                      let arrToSplit: string[] = item.name.split(' ');
+                      arrToSplit.forEach(
+                        element => {
+                          if ((partNameToOut+element+' ').length < this.maxLengthFoodName) {
+                            partNameToOut += element+' ';
+                          } else {
+                            this.header += partNameToOut+'\n';
+                            partNameToOut = '';
+                          }
+                        }
+                      )
+                    } else { // if name of food not to split
                       let Sqty: number = item.qty * 1.0; //default value;
                       let space_qty: string = '   ';
                       let space_sum: string = '       ';
@@ -143,20 +156,17 @@ export class OrderListComponent implements OnInit {
                       let qty = Sqty.toFixed(2);
                       let sSum: number = (item.qty * item.price);
                       let sum = sSum.toFixed(2);
-                      //if (this.isInt(item.qty)) { qty = item.qty.toString()+'.00';}
-                      //if (this.isInt(sSum)) { sum += '.00';}
                       if (sSum >= 10 && item.qty <= 99) {space_sum = '      '}
                       if (sSum >= 100) {space_sum = '     '}
-                      //this.printRows.push(i, this.addSpace(item.name, this.maxLengthFoodName, 'af'), qty, sum, '0')
                       this.header += this.addSpace(item.name, this.maxLengthFoodName, 'af')+
                       space_qty+qty+space_sum+sum+'\n'
                     }
-                    ++i;
+
                   }
                 )
                 //console.log(arrOrderDetails)
                 copy(this.header) 
-                console.log(this.printRows)
+                //console.log(this.printRows)
               });
 
           

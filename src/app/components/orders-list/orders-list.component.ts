@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Router, NavigationExtras } from '@angular/router';
 import copy from 'copy-to-clipboard';
 import { Order } from '../../models/order';
+import { menuItem } from '../../models/menuItem';
+import { PrintRow } from '../../models/printRow';
 import { DataService } from '../../services/data.service';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { ToastrService } from 'ngx-toastr';
@@ -14,11 +16,14 @@ import { map } from 'rxjs/operators';
 })
 export class OrderListComponent implements OnInit {
   orders: Order[] = [];
+  printRows: PrintRow[] = [];
   displayedColumns: string[] = [];
   columnsToDisplay: string[] = [];
   header: string;
   strLine4: string;
   strLine5: string;
+  maxLength: number;
+  maxLengthFoodName: number;
 
   constructor(private dataService: DataService, private router : Router,private firestore: AngularFirestore, private toastr:ToastrService) { }
 
@@ -85,40 +90,66 @@ export class OrderListComponent implements OnInit {
   }
 
   makeHeader2(id: string) {
-    //Чек # 192264  стол # VIP005       Гостей 4
-    //05.07.19      открыт 20:30    печать 00:05
-    
     this.dataService.getParams().get().toPromise().then(
-            param => {//console.log("params data:", doc.data())
-              this.header  =  param.data().headerStr1+'\n';
-              this.header +=  param.data().headerStr2+'\n';
-              this.header +=  param.data().headerStr3+'\n';
-              this.dataService.getOrder(id).get().toPromise().then(
-              order => {//console.log("document data:", doc1.data())
-                  //4-th check's line
-                  let check: string = order.data().check.toString();
-                  let TableNo: string = order.data().TableNo;
-                  let guests: string = order.data().guests.toString();
-                  this.strLine4 = param.data().headerStr4+this.addSpace(check, 8, 'af')+'Стол # '+this.addSpace(TableNo, 12, 'af') + 'Гостей '+this.addSpace(guests, 2, 'pr')+'\n';
-                  //5-th check's line
-                  let orderDate: string
-                  let str: string = order.data().OrderDate;
-                  orderDate = str.slice(0, 5)+'.'+str.slice(8, 10);
-                  let orderTime: string = order.data().OrderDate;
-                  orderTime = orderTime.slice(12);
-                  this.strLine5 = orderDate +'      Открыт '+orderTime+'    Печать '+order.data().printTime+'\n';
-                  //console.log(this.strLine4, this.strLine5)
-                  this.header +=  this.strLine4;
-                  this.header +=  this.strLine5;
-                  this.header +=  param.data().headerStr6+'\n';
-                  this.header +=  param.data().headerStr7+'\n';
-                  this.header +=  param.data().tableHeader1+'\n';
-                  this.header +=  param.data().lineStr+'\n';
-                  //console.log(this.header)
-                  copy(this.header);
-                }
-              )
+      param => {//console.log("params data:", doc.data())
+        this.maxLength = param.data().maxLength;
+        this.maxLengthFoodName = param.data().maxLengthFoodName;
+        this.header  =  param.data().headerStr1+'\n';
+        this.header +=  param.data().headerStr2+'\n';
+        this.header +=  param.data().headerStr3+'\n';
+        this.dataService.getOrder(id).get().toPromise().then(
+          order => {//console.log("document data:", doc1.data())
+            //4-th check's line
+            let check: string = order.data().check.toString();
+            let TableNo: string = order.data().TableNo;
+            let guests: string = order.data().guests.toString();
+            this.strLine4 = param.data().headerStr4+this.addSpace(check, 8, 'af')+'Стол # '+this.addSpace(TableNo, 12, 'af') + 'Гостей '+this.addSpace(guests, 2, 'pr')+'\n';
+            //5-th check's line
+            let orderDate: string
+            let str: string = order.data().OrderDate;
+            orderDate = str.slice(0, 5)+'.'+str.slice(8, 10);
+            let orderTime: string = order.data().OrderDate;
+            orderTime = orderTime.slice(12);
+            this.strLine5 = orderDate +'      Открыт '+orderTime+'    Печать '+order.data().printTime+'\n';
+            //console.log(this.strLine4, this.strLine5)
+            this.header +=  this.strLine4;
+            this.header +=  this.strLine5;
+            this.header +=  param.data().headerStr6+'\n';
+            this.header +=  param.data().headerStr7+'\n';
+            this.header +=  param.data().tableHeader1+'\n';
+            this.header +=  param.data().lineStr+'\n';
+            //console.log(this.header)
+            copy(this.header);
+          }
+        )
+        let arrOrderDetails: menuItem[] = [];
+        this.dataService.getSubCollection(id).subscribe(actionArray => {
+        arrOrderDetails = actionArray.map(item => {
+          return {
+            id: item.payload.doc.id,
+            ...item.payload.doc.data()
+          } as menuItem;
+        });
+        let i: number = 0;
+        arrOrderDetails.forEach(
+          item => {
+            if (item.name.length > this.maxLengthFoodName) {
+
+            } else {
+              this.printRows.push(i,
+                this.addSpace(item.name, this.maxLengthFoodName, 'af'),
+                item.qty,
+                item.price*item.qty,
+                0
+                )
             }
+            ++i;
+          }
+        )
+        //console.log(arrOrderDetails)
+        console.log(this.printRows)
+      });
+      }
     )
   }
 

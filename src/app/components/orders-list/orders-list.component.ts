@@ -3,7 +3,6 @@ import { Router, NavigationExtras } from '@angular/router';
 import copy from 'copy-to-clipboard';
 import { Order } from '../../models/order';
 import { menuItem } from '../../models/menuItem';
-import { PrintRow } from '../../models/printRows';
 import { DataService } from '../../services/data.service';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { ToastrService } from 'ngx-toastr';
@@ -16,7 +15,6 @@ import { map } from 'rxjs/operators';
 })
 export class OrderListComponent implements OnInit {
   orders: Order[] = [];
-  printRows: PrintRow[] = [];
   displayedColumns: string[] = [];
   columnsToDisplay: string[] = [];
   header: string;
@@ -118,9 +116,8 @@ export class OrderListComponent implements OnInit {
             this.header +=  param.data().headerStr7+'\n';
             this.header +=  param.data().tableHeader1+'\n';
             this.header +=  param.data().lineStr+'\n';
-            //console.log(this.header)
-            //copy(this.header);
-            this.printRows = [];
+            //end of check's header 
+
             let arrOrderDetails: menuItem[] = [];
             this.dataService.getSubCollection(id).subscribe(actionArray => {
               arrOrderDetails = actionArray.map(item => {
@@ -129,53 +126,54 @@ export class OrderListComponent implements OnInit {
                     ...item.payload.doc.data()
                   } as menuItem;
                 });
-                let i: number = 0;
                 arrOrderDetails.forEach(
                   item => {
-
-
                     if (item.name.length > this.maxLengthFoodName) { // if name of food needed to split
                       let partNameToOut: string = '';
                       let arrToSplit: string[] = item.name.split(' ');
-                      arrToSplit.forEach(
-                        element => {
-                          if ((partNameToOut+element+' ').length < this.maxLengthFoodName) {
+                      let isFirstPartOfName: boolean = true;
+                      arrToSplit.forEach( // loop by each word in menu line
+                        (element, index, arr) => {
+                          if ((partNameToOut + element+' ').length < this.maxLengthFoodName) {
                             partNameToOut += element+' ';
                           } else {
-                            this.header += partNameToOut+'\n';
-                            partNameToOut = '';
+                            //console.log(partNameToOut)
+                            if (isFirstPartOfName) {this.header += this.buildLine(item, partNameToOut)}
+                            if (!isFirstPartOfName) {this.header += partNameToOut+'\n';}
+                             console.log(element)
+                            partNameToOut = element + ' ';
+                            isFirstPartOfName = false;
                           }
+                          // execute last item logic to output splitted words blocks
+                          if (Object.is(arr.length - 1, index)) { this.header += partNameToOut+'\n'; }
                         }
                       )
                     } else { // if name of food not to split
-                      let Sqty: number = item.qty * 1.0; //default value;
-                      let space_qty: string = '   ';
-                      let space_sum: string = '       ';
-                      if (item.qty >= 10 && item.qty <= 99) {space_qty = '  '}
-                      if (item.qty > 99) {space_qty = ' '};
-                      let qty = Sqty.toFixed(2);
-                      let sSum: number = (item.qty * item.price);
-                      let sum = sSum.toFixed(2);
-                      if (sSum >= 10 && item.qty <= 99) {space_sum = '      '}
-                      if (sSum >= 100) {space_sum = '     '}
-                      this.header += this.addSpace(item.name, this.maxLengthFoodName, 'af')+
-                      space_qty+qty+space_sum+sum+'\n'
+                      this.header += this.buildLine(item, item.name)
                     }
 
                   }
                 )
-                //console.log(arrOrderDetails)
                 copy(this.header) 
-                //console.log(this.printRows)
               });
-
-          
           }
         )
-
-      
       }
     )
+  }
+
+  buildLine(item: menuItem, itemName: string): string {
+    let Sqty: number = item.qty * 1.0; //default value;
+    let space_qty: string = '   ';
+    let space_sum: string = '       ';
+    if (item.qty >= 10 && item.qty <= 99) {space_qty = '  '}
+    if (item.qty > 99) {space_qty = ' '};
+    let qty = Sqty.toFixed(2);
+    let sSum: number = (item.qty * item.price);
+    let sum = sSum.toFixed(2);
+    if (sSum >= 10 && item.qty <= 99) {space_sum = '      '}
+    if (sSum >= 100) {space_sum = '     '}
+    return this.addSpace(itemName, this.maxLengthFoodName, 'af')+space_qty + qty + space_sum + sum+'\n';
   }
 
   addSpace(txt: string, needLenght: number, key: string) {

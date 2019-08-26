@@ -144,7 +144,7 @@ export class OrderListComponent implements OnInit {
                             partNameToOut = element + ' ';
                             isFirstPartOfName = false;
                           }
-                          // execute last item logic to output splitted words blocks
+                          // execute last item logic to output splitted words by blocks
                           if (Object.is(arr.length - 1, index)) { this.header += partNameToOut+'\n'; }
                         }
                       )
@@ -154,7 +154,7 @@ export class OrderListComponent implements OnInit {
 
                   }
                 )
-                copy(this.header) 
+                copy(this.header) // copy check's data to clipboard
               });
           }
         )

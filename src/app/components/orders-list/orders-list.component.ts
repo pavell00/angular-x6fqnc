@@ -119,37 +119,52 @@ export class OrderListComponent implements OnInit {
             this.header +=  param.data().tableHeader1+'\n';
             this.header +=  param.data().lineStr+'\n';
             //console.log(this.header)
-            copy(this.header);
-          }
-        )
-        let arrOrderDetails: menuItem[] = [];
-        this.dataService.getSubCollection(id).subscribe(actionArray => {
-        arrOrderDetails = actionArray.map(item => {
-          return {
-            id: item.payload.doc.id,
-            ...item.payload.doc.data()
-          } as menuItem;
-        });
-        let i: number = 0;
-        arrOrderDetails.forEach(
-          item => {
-            if (item.name.length > this.maxLengthFoodName) {
+            //copy(this.header);
+            this.printRows = [];
+            let arrOrderDetails: menuItem[] = [];
+            this.dataService.getSubCollection(id).subscribe(actionArray => {
+              arrOrderDetails = actionArray.map(item => {
+                  return {
+                    id: item.payload.doc.id,
+                    ...item.payload.doc.data()
+                  } as menuItem;
+                });
+                let i: number = 0;
+                arrOrderDetails.forEach(
+                  item => {
+                    if (item.name.length > this.maxLengthFoodName) {
 
-            } else {
-              this.printRows.push(i,
-                this.addSpace(item.name, this.maxLengthFoodName, 'af'),
-                
-                item.qty.toString(),
-                (item.price*item.qty).toString(),
-                '0'
+                    } else {
+                      let qty: string;
+                      let sum: string;
+                      let space_qty: string = '   ';
+                      if (item.qty >= 10 && item.qty <= 99) {space_qty = '  '}
+                      if (item.qty > 99) {space_qty = ' '};
+                      qty = item.qty.toString(); //default value
+                      let sSum: number = item.qty * item.price;
+                      sum = sSum.toString();
+                      if (this.isInt(item.qty)) { qty = item.qty.toString()+'.00';}
+                      //if (item.qty <= 9) {qty = '   '+qty} else {qty = '  '+qty}
+                      //if (sSum <= 9) {qty = '   '+qty} else {qty = '  '+qty}
+                      if (this.isInt(sSum)) { sum += '.00';}
+                      if (sSum >= 100) {sum = '     '+sum} else {sum = '      '+sum}
+                      //this.printRows.push(i, this.addSpace(item.name, this.maxLengthFoodName, 'af'), qty, sum, '0')
+                      this.header += this.addSpace(item.name, this.maxLengthFoodName, 'af')+
+                      space_qty+qty+sum+'\n'
+                    }
+                    ++i;
+                  }
                 )
-            }
-            ++i;
+                //console.log(arrOrderDetails)
+                copy(this.header) 
+                console.log(this.printRows)
+              });
+
+          
           }
         )
-        //console.log(arrOrderDetails)
-        console.log(this.printRows)
-      });
+
+      
       }
     )
   }
@@ -175,7 +190,7 @@ export class OrderListComponent implements OnInit {
     console.log(this.firestore.collection('orders').doc(id).ref.id )
   }
 
-  function isInt(n) {
+  isInt(n: number) {
     return n % 1 === 0;
   }
 }

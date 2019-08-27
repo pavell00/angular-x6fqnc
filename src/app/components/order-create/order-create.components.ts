@@ -39,7 +39,6 @@ export class OrderCreateComponent implements OnInit {
         sumOrder: this.orderSum,
         discountOrder: this.orderDiscount,
         isDone: false,
-        OrderText: '',
         guests: this.orderGuests,
         check: this.orderCheck,
         printTime: this.orderPrintTime

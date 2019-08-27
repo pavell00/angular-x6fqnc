@@ -1,11 +1,11 @@
 <table mat-table [dataSource]="orders" class="mat-elevation-z8">
   <ng-container matColumnDef="TableNo">
-    <th mat-header-cell *matHeaderCellDef>TableNo</th>
+    <th mat-header-cell *matHeaderCellDef>Стол</th>
     <td mat-cell *matCellDef="let element" (click)="editOrder(element.id)"> {{element.TableNo}} </td>
   </ng-container>
 
   <ng-container matColumnDef="OrderDate">
-    <th mat-header-cell *matHeaderCellDef>Order Date</th>
+    <th mat-header-cell *matHeaderCellDef>Дата</th>
     <td mat-cell *matCellDef="let element" (click)="editOrder(element.id)"> {{element.OrderDate}} </td>
   </ng-container>
   

@@ -28,16 +28,16 @@
   <mat-form-field>
       <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Поиск">
   </mat-form-field>
-    <mat-form-field>
+    <mat-form-field style="width: 15%;">
       <input matInput [(ngModel)]="orderNo" placeholder="Номер стола">
   </mat-form-field>
   <mat-form-field>
       <input matInput [(ngModel)]="orderDate" placeholder="Дата / время стола">
   </mat-form-field>
-  <mat-form-field style="text-align: right;">
+  <mat-form-field style="text-align: right; width: 15%;">
       <input matInput [(ngModel)]="orderSum" placeholder="Сумма">
   </mat-form-field>
-  <mat-form-field style="text-align: right;">
+  <mat-form-field style="text-align: right; width: 10%;">
       <input matInput [(ngModel)]="orderDiscount" placeholder="Дисконт">
   </mat-form-field>
 </span>

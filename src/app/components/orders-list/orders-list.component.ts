@@ -26,7 +26,7 @@ export class OrderListComponent implements OnInit {
   constructor(private dataService: DataService, private router : Router,private firestore: AngularFirestore, private toastr:ToastrService) { }
 
   ngOnInit(): void {
-    this.displayedColumns = ['TableNo','OrderDate','sumOrder','discountOrder','isDone','Actions'];
+    this.displayedColumns = ['TableNo','OrderDate','sumOrder','discountOrder','Actions'];
     this.columnsToDisplay = this.displayedColumns.slice();
     this.dataService.getOrders().subscribe(actionArray => {
       this.orders = actionArray.map(item => {

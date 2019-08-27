@@ -44,15 +44,12 @@ export class OrderListComponent implements OnInit {
   }
 
   editOrder(id: string) {
-    let navigationExtras: NavigationExtras = {
-      queryParams: { 'orderid': id }
-    };
+    let navigationExtras: NavigationExtras = { queryParams: {'orderid': id} };
     this.router.navigate(['/order-detail'], navigationExtras);
   }
 
   createPrintForm(id: string) {
     this.makeHeader2(id);
-    
   }
 
   makeHeader(id: string) {
@@ -60,25 +57,25 @@ export class OrderListComponent implements OnInit {
     //05.07.19      открыт 20:30    печать 00:05
     
     let p1 = this.dataService.getOrder(id).get().toPromise().then(
-            doc => {//console.log("document data:", doc.data())
-              this.strLine4 = 'Чек '+doc.data().check+'Стол # '+doc.data().TableNo + 'Гостей ' +doc.data().guests+'\n';
-              this.strLine5 =  doc.data().OrderDate+'открыт '+doc.data().OrderDate+'печать '+doc.data().printTime+'\n';
-              console.log(this.strLine4, this.strLine5)
-            }
+      doc => {//console.log("document data:", doc.data())
+        this.strLine4 = 'Чек '+doc.data().check+'Стол # '+doc.data().TableNo + 'Гостей ' +doc.data().guests+'\n';
+        this.strLine5 =  doc.data().OrderDate+'открыт '+doc.data().OrderDate+'печать '+doc.data().printTime+'\n';
+        console.log(this.strLine4, this.strLine5)
+      }
     )
 
     let p2 = this.dataService.getParams().get().toPromise().then(
-            doc => {//console.log("params data:", doc.data())
-              this.header  =  doc.data().headerStr1+'\n';
-              this.header +=  doc.data().headerStr2+'\n';
-              this.header +=  doc.data().headerStr3+'\n';
-              this.header +=  this.strLine4;
-              this.header +=  this.strLine5;
-              this.header +=  doc.data().headerStr6+'\n';
-              this.header +=  doc.data().headerStr7+'\n';
-              this.header +=  doc.data().tableHeader1+'\n';
-              this.header +=  doc.data().lineStr+'\n';
-            }
+      doc => {//console.log("params data:", doc.data())
+        this.header  =  doc.data().headerStr1+'\n';
+        this.header +=  doc.data().headerStr2+'\n';
+        this.header +=  doc.data().headerStr3+'\n';
+        this.header +=  this.strLine4;
+        this.header +=  this.strLine5;
+        this.header +=  doc.data().headerStr6+'\n';
+        this.header +=  doc.data().headerStr7+'\n';
+        this.header +=  doc.data().tableHeader1+'\n';
+        this.header +=  doc.data().lineStr+'\n';
+      }
     )
 
     let promise = Promise.all([p1, p2])
@@ -92,9 +89,11 @@ export class OrderListComponent implements OnInit {
       param => {//console.log("params data:", doc.data())
         this.maxLength = param.data().maxLength;
         this.maxLengthFoodName = param.data().maxLengthFoodName;
-        this.header  =  param.data().headerStr1+'\n';
-        this.header +=  param.data().headerStr2+'\n';
-        this.header +=  param.data().headerStr3+'\n';
+        this.header  = param.data().headerStr1+'\n';
+        this.header += param.data().headerStr2+'\n';
+        this.header += param.data().headerStr3+'\n';
+        this.header += '\n';
+        this.header += '\n';
         this.dataService.getOrder(id).get().toPromise().then(
           order => {//console.log("document data:", doc1.data())
             //4-th check's line
@@ -110,12 +109,13 @@ export class OrderListComponent implements OnInit {
             orderTime = orderTime.slice(12);
             this.strLine5 = orderDate +'      Открыт '+orderTime+'    Печать '+order.data().printTime+'\n';
             //console.log(this.strLine4, this.strLine5)
-            this.header +=  this.strLine4;
-            this.header +=  this.strLine5;
-            this.header +=  param.data().headerStr6+'\n';
-            this.header +=  param.data().headerStr7+'\n';
-            this.header +=  param.data().tableHeader1+'\n';
-            this.header +=  param.data().lineStr+'\n';
+            this.header += this.strLine4;
+            this.header += this.strLine5;
+            this.header += param.data().headerStr6+'\n';
+            this.header += param.data().headerStr7+'\n';
+            this.header += '\n';
+            this.header += param.data().tableHeader1+'\n';
+            this.header += param.data().lineStr+'\n';
             //end of check's header 
 
             let arrOrderDetails: menuItem[] = [];

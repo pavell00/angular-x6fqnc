@@ -5,7 +5,7 @@
   </ng-container>
 
   <ng-container matColumnDef="OrderDate">
-    <th mat-header-cell *matHeaderCellDef>Дата</th>
+    <th mat-header-cell *matHeaderCellDef>Дата / Время</th>
     <td mat-cell *matCellDef="let element" (click)="editOrder(element.id)"> {{element.OrderDate}} </td>
   </ng-container>
   
@@ -15,7 +15,7 @@
   </ng-container>
   
   <ng-container matColumnDef="discountOrder">
-    <th mat-header-cell *matHeaderCellDef>Дисконт</th>
+    <th mat-header-cell *matHeaderCellDef> +/- </th>
     <td mat-cell *matCellDef="let element" (click)="editOrder(element.id)"> {{element.discountOrder}} </td>
   </ng-container>
 

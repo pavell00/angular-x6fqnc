@@ -12,12 +12,12 @@ import { Order } from '../../models/order';
 export class OrderCreateComponent implements OnInit {
     newOrder: Order;
     orderDate: string = new Date().toLocaleString('ru');
-    orderNo: string = 'Стол № 1';
+    orderNo: string = '№ 1';
     orderSum: number = 0;
     orderDiscount: number = 0;
     orderIsDone: boolean = false;
     orderGuests: number = 1;
-    orderPrintTime: string = '0:00';
+    orderPrintTime: string = '00:00';
     orderCheck: number = 1;
 
     constructor(private dataService: DataService,
@@ -25,12 +25,15 @@ export class OrderCreateComponent implements OnInit {
     private toastr: ToastrService) { }
 
     ngOnInit(): void {
-      this.orderDate = this.orderDate.substring(0, this.orderDate.length-3);
+      let d = new Date();
+      let mm: number = d.getMonth() + 1;
+      let date: string = d.getDate()+'.'+mm+'.'+d.getFullYear().toString().substring(2, 4)+' '+d.getHours()+':'+d.getMinutes();
+      this.orderDate = date;
     }
 
     onSave() {
       //add new document
-      let res = this.firestore.collection('orders').add({
+        let res = this.firestore.collection('orders').add({
         OrderDate: this.orderDate, 
         TableNo: this.orderNo,
         sumOrder: this.orderSum,

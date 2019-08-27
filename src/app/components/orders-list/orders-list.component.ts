@@ -140,7 +140,7 @@ export class OrderListComponent implements OnInit {
                             //console.log(partNameToOut)
                             if (isFirstPartOfName) {this.header += this.buildLine(item, partNameToOut)}
                             if (!isFirstPartOfName) {this.header += partNameToOut+'\n';}
-                             console.log(element)
+                            // console.log(element)
                             partNameToOut = element + ' ';
                             isFirstPartOfName = false;
                           }
@@ -154,6 +154,16 @@ export class OrderListComponent implements OnInit {
 
                   }
                 )
+                this.header += param.data().lineStr+'\n';
+                this.header += param.data().totalStr+'\n';
+                this.header += param.data().lineStr+'\n';
+                this.header += param.data().discountStr+'\n';
+                this.header += param.data().lineStr+'\n';
+                this.header += param.data().totalToPay+'\n';
+                this.header += param.data().grivnaStr+'\n';
+                this.header += param.data().lineStr+'\n';
+                this.header += param.data().footerStr+'\n';
+                this.header += param.data().footerStr1+'\n';
                 copy(this.header) // copy check's data to clipboard
               });
           }

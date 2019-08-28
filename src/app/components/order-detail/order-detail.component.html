@@ -1,5 +1,11 @@
 <div *ngIf="orderId || selectedMenu?.length">
-  <table class="table table-hover">
+  <ul class="heroes">
+    <li *ngFor="let emp of selectedMenu" (click)="openDialog(emp)">
+      {{emp.name}} {{emp.price}} {{emp.qty}} {{emp.discount}}
+    </li>
+  </ul>
+  <button (click)="onSave()">Save</button>
+  <!--<table class="table table-hover">
     <thead>
       <tr>
         <th>Перечень заказа</th>
@@ -20,7 +26,7 @@
       </tr>
     </tbody>
   </table>
-  <button (click)="onSave()">Save</button>
+  <button (click)="onSave()">Save</button>-->
   <!--<button (click)="getOrder()">getOrder</button>-->
 </div>
 

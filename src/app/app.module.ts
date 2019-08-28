@@ -7,7 +7,7 @@ import { FormsModule } from '@angular/forms';
 import { MatTableModule, MatExpansionModule, MatFormFieldModule,
   MatInputModule, MatButtonModule, MatCheckboxModule, MatOptionModule, MatSelectModule, 
   MatListModule, MatIconModule, MatToolbar, MatToolbarModule, MatSnackBarModule,
-  MAT_DIALOG_DATA,  } from '@angular/material';
+  MAT_DIALOG_DATA } from '@angular/material';
 import {MatDialogModule, MatDialogRef, MatDialog} from '@angular/material/dialog';
 
 import { environment } from './environments/environment';
@@ -40,6 +40,7 @@ import { OrderCreateComponent } from './components/order-create/order-create.com
     FormsModule,
     MatFormFieldModule, MatTableModule, MatIconModule, MatDialogModule,
     MatInputModule, MatOptionModule, MatSelectModule, MatCheckboxModule,
+    MatListModule,
     ToastrModule.forRoot(),
     HttpClientModule
     ],

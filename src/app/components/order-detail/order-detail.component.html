@@ -41,19 +41,19 @@
     <input matInput [(ngModel)]="orderDate" placeholder="Дата / время стола">
 </mat-form-field>
 <mat-form-field style="text-align: right; width: 20%;">
-    <input matInput [(ngModel)]="orderSum" placeholder="Сумма счета">
+    <input matInput type="number"  [(ngModel)]="orderSum" placeholder="Сумма счета">
 </mat-form-field>
 <mat-form-field style="text-align: right; width: 10%;">
-    <input matInput [(ngModel)]="orderDiscount" placeholder="Дисконт">
+    <input matInput type="number" [(ngModel)]="orderDiscount" placeholder="Дисконт">
 </mat-form-field>
 <mat-form-field style="text-align: right;">
-    <input matInput [(ngModel)]="orderDiscountSum" placeholder="Сумма дисконта">
+    <input matInput type="number" [(ngModel)]="orderDiscountSum" placeholder="Сумма дисконта">
 </mat-form-field>
 <mat-form-field style="text-align: right;">
-    <input matInput [(ngModel)]="orderSumService" placeholder="Сумма обслуживания">
+    <input matInput type="number" [(ngModel)]="orderSumService" placeholder="Сумма обслуживания">
 </mat-form-field>
 <mat-form-field style="text-align: right;">
-    <input matInput [(ngModel)]="orderSumToPay" placeholder="Сумма к оплате">
+    <input matInput type="number" [(ngModel)]="orderSumToPay" placeholder="Сумма к оплате">
 </mat-form-field>
 
 <table mat-table [dataSource]="filteredMenulist" class="mat-elevation-z8">

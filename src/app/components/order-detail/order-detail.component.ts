@@ -32,12 +32,12 @@ export class OrderDetailComponent implements OnInit, AfterContentInit {
   orderDate: string = new Date().toLocaleString();
   orderNo: string = 'Стол № 1';
   orderId: string;
-  orderSum: number = 0;
-  orderDiscount: number = 0;
-  orderDiscountSum: number = 0;
+  orderSum: number = 0.0;
+  orderDiscount: number = 0.0;
+  orderDiscountSum: number = 0.0;
   orderIsDone: boolean;
-  orderSumToPay: number = 0;
-  orderSumService: number = 0;
+  orderSumToPay: number = 0.0;
+  orderSumService: number = 0.0;
   newData: any;
   testData: any
 
@@ -103,13 +103,16 @@ export class OrderDetailComponent implements OnInit, AfterContentInit {
   }
 
   caclSumOrder() {
+    this.orderSum = 0.0;
+    let ssum: number = 0.0;
     this.selectedMenu.forEach(
       item => {
-        this.orderSum += (item.price * item.qty) * 1
+        ssum += Math.round(item.price * item.qty);
       }
     )
-    this.orderDiscountSum = this.orderSum * (this.orderDiscount /100.);
-    this.orderSumToPay = this.orderSum - this.orderDiscountSum + this.orderSumService;
+    this.orderSum = ssum;
+    this.orderDiscountSum = Math.round(this.orderSum * Math.round(this.orderDiscount /100.0));
+    this.orderSumToPay = (this.orderSum - this.orderDiscountSum + this.orderSumService) * 1;
   }
 
   ngAfterContentInit() {

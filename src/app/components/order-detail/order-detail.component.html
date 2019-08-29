@@ -2,6 +2,7 @@
   <ul class="heroes">
     <li *ngFor="let emp of selectedMenu" (click)="openDialog(emp)">
       {{emp.name}} {{emp.price}} {{emp.qty}} {{emp.discount}}
+        <button mat-mini-fab (click)="onDelete(emp.id)">X</button>
     </li>
   </ul>
   <button (click)="onSave()">Save</button>
@@ -39,11 +40,20 @@
 <mat-form-field>
     <input matInput [(ngModel)]="orderDate" placeholder="Дата / время стола">
 </mat-form-field>
-<mat-form-field style="text-align: right; width: 15%;">
-    <input matInput [(ngModel)]="orderSum" placeholder="Сумма">
+<mat-form-field style="text-align: right; width: 20%;">
+    <input matInput [(ngModel)]="orderSum" placeholder="Сумма счета">
 </mat-form-field>
 <mat-form-field style="text-align: right; width: 10%;">
     <input matInput [(ngModel)]="orderDiscount" placeholder="Дисконт">
+</mat-form-field>
+<mat-form-field style="text-align: right;">
+    <input matInput [(ngModel)]="orderDiscountSum" placeholder="Сумма дисконта">
+</mat-form-field>
+<mat-form-field style="text-align: right;">
+    <input matInput [(ngModel)]="orderSumService" placeholder="Сумма обслуживания">
+</mat-form-field>
+<mat-form-field style="text-align: right;">
+    <input matInput [(ngModel)]="orderSumToPay" placeholder="Сумма к оплате">
 </mat-form-field>
 
 <table mat-table [dataSource]="filteredMenulist" class="mat-elevation-z8">

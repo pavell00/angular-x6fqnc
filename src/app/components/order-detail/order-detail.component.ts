@@ -34,8 +34,10 @@ export class OrderDetailComponent implements OnInit, AfterContentInit {
   orderId: string;
   orderSum: number = 0;
   orderDiscount: number = 0;
+  orderDiscountSum: number = 0;
   orderIsDone: boolean;
-
+  orderSumToPay: number = 0;
+  orderSumService: number = 0;
   newData: any;
   testData: any
 
@@ -69,8 +71,10 @@ export class OrderDetailComponent implements OnInit, AfterContentInit {
         TableNo: this.orderNo,
         sumOrder: this.orderSum,
         discountOrder: this.orderDiscount,
-        isDone: true,
-        OrderText: 'test check string'
+        sumDiscount: this.orderDiscountSum,
+        sumService: this.orderSumService,
+        sumToPay: this.orderSumToPay
+        //isDone: true, this.orderSumToPay = this.orderSumService;
       });
       this.storeOrderItems(this.orderId);
       this.toastr.success('Заказ обновлен', 'EMP. Register');
@@ -82,8 +86,10 @@ export class OrderDetailComponent implements OnInit, AfterContentInit {
         TableNo: this.orderNo,
         sumOrder: this.orderSum,
         discountOrder: this.orderDiscount,
-        isDone: true,
-        OrderText: 'test check string'
+        sumDiscount: this.orderDiscountSum,
+        sumService: this.orderSumService,
+        sumToPay: this.orderSumToPay        
+        //isDone: true,
       }).then(
         (w) => {
           this.orderId = w.id;
@@ -131,9 +137,11 @@ export class OrderDetailComponent implements OnInit, AfterContentInit {
           discount: item.discount
         })
         i++;
+        this.orderSum += item.price * item.qty;
       }
     )
-
+    this.orderDiscountSum = this.orderSum * (this.orderDiscount /100.);
+    this.orderSumToPay = this.orderSum - this.orderDiscountSum - this.orderSumService;
   }
 
   getOrderItems2() {
@@ -171,12 +179,12 @@ export class OrderDetailComponent implements OnInit, AfterContentInit {
   }
 
   onDelete(id: string) {
-    console.log(id, this.selectedMenu)
-  /*  for(let i = 0; i < this.selectedMenu.length; i++) {
+    //console.log(id, this.selectedMenu)
+    for(let i = 0; i < this.selectedMenu.length; i++) {
       if(this.selectedMenu[i].id == id) {
         this.selectedMenu.splice(i, 1);
       }
-    }*/
+    }
   }
 
   applyFilter(filterValue: string) {

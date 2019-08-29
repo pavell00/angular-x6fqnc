@@ -65,6 +65,7 @@ export class OrderDetailComponent implements OnInit, AfterContentInit {
   onSave() {
     //update existing document
     if (this.orderId) {
+      if (this.selectedMenu) this.caclSumOrder();
       this.firestore.collection('orders').doc(this.orderId).update({
         //id: this.orderId,
         OrderDate: this.orderDate, 
@@ -99,6 +100,16 @@ export class OrderDetailComponent implements OnInit, AfterContentInit {
       )
       //this.storeOrderItems(this.orderId);
     }
+  }
+
+  caclSumOrder() {
+    this.selectedMenu.forEach(
+      item => {
+        this.orderSum += (item.price * item.qty) * 1
+      }
+    )
+    this.orderDiscountSum = this.orderSum * (this.orderDiscount /100.);
+    this.orderSumToPay = this.orderSum - this.orderDiscountSum + this.orderSumService;
   }
 
   ngAfterContentInit() {
@@ -137,11 +148,9 @@ export class OrderDetailComponent implements OnInit, AfterContentInit {
           discount: item.discount
         })
         i++;
-        this.orderSum += item.price * item.qty;
       }
     )
-    this.orderDiscountSum = this.orderSum * (this.orderDiscount /100.);
-    this.orderSumToPay = this.orderSum - this.orderDiscountSum - this.orderSumService;
+
   }
 
   getOrderItems2() {
@@ -168,6 +177,9 @@ export class OrderDetailComponent implements OnInit, AfterContentInit {
             this.orderIsDone = doc.data().isDone;
             this.orderSum = doc.data().sumOrder;
             this.orderDiscount = doc.data().discountOrder;
+            this.orderDiscountSum = doc.data().sumDiscount;
+            this.orderSumService = doc.data().sumService;
+            this.orderSumToPay = doc.data().sumToPay;
           }
         )
       }

@@ -33,6 +33,7 @@
   </div>
 </div>
 <button (click)="print()">print</button>
+<button (click)="printForm()">PrintForm</button>
 
 <mat-form-field>
     <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Поиск">
@@ -96,5 +97,3 @@
   <tr mat-row *matRowDef="let row; columns: displayedColumns;">
   </tr>
 </table>
-
-

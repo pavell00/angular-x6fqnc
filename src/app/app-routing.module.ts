@@ -5,6 +5,7 @@ import { OrderDetailComponent } from './components/order-detail/order-detail.com
 import { MenuItemCreateComponent } from './components/menuItem-create/menuItem-create.component';
 import { MenuListComponent } from './components/menu-list/menu-list.component';
 import { OrderCreateComponent } from './components/order-create/order-create.components';
+import { PrintFormComponent } from './components/print-form/print-form.component'
 
 const routes: Routes = [
   { path: 'order-create', component: OrderCreateComponent},  
@@ -12,6 +13,7 @@ const routes: Routes = [
   { path: 'order-detail', component: OrderDetailComponent},
   { path: 'menu-list', component: MenuListComponent},
   { path: 'menuItem-create', component: MenuItemCreateComponent},
+  { path: 'print-form', component: PrintFormComponent},
   { path: '**', redirectTo: '' }
 ];
 

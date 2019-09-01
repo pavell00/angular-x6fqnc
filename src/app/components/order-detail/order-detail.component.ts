@@ -4,7 +4,7 @@ import { menuItem } from '../../models/menuItem';
 import { DataService } from '../../services/data.service';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { ToastrService } from 'ngx-toastr';
-import { ActivatedRoute, NavigationEnd }     from '@angular/router';
+import { ActivatedRoute, Router, NavigationExtras }     from '@angular/router';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Subscription, Observable, Subject } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -41,7 +41,7 @@ export class OrderDetailComponent implements OnInit, AfterContentInit {
   newData: any;
   testData: any
 
-  constructor(private dataService: DataService, private route: ActivatedRoute,
+  constructor(private dataService: DataService, private route: ActivatedRoute, private router: Router,
     private firestore: AngularFirestore, public dialog: MatDialog, private toastr: ToastrService) {
 
   }
@@ -139,6 +139,11 @@ export class OrderDetailComponent implements OnInit, AfterContentInit {
       this.getOrderItems2();
       this.fillOrderData();
     } 
+  }
+
+  printForm() {
+    let navigationExtras: NavigationExtras = { queryParams: {'selectedMenu': this.selectedMenu} };
+    this.router.navigate(['/print-form'], navigationExtras);
   }
 
   storeOrderItems(id: string) {

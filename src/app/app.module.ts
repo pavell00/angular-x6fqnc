@@ -23,13 +23,15 @@ import { MenuListComponent } from './components/menu-list/menu-list.component';
 import { OrderListComponent } from './components/orders-list/orders-list.component';
 import { MenuItemCreateComponent } from './components/menuItem-create/menuItem-create.component';
 import { OrderCreateComponent } from './components/order-create/order-create.components';
+import { PrintFormComponent } from './components/print-form/print-form.component';
 
 @NgModule({
   declarations: [ 
     AppComponent,
     OrderDetailComponent, DialogOverviewExampleDialog,
     MenuListComponent, OrderListComponent, MenuItemCreateComponent,
-    OrderCreateComponent
+    OrderCreateComponent,
+    PrintFormComponent
     ],
   imports:      [ 
     BrowserModule,

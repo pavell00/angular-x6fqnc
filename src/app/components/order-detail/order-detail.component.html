@@ -1,35 +1,38 @@
-<div *ngIf="orderId || selectedMenu?.length">
-  <ul class="heroes">
-    <li *ngFor="let emp of selectedMenu" (click)="openDialog(emp)">
-      {{emp.name}} {{emp.price}} {{emp.qty}} {{emp.discount}}
-        <button mat-mini-fab (click)="onDelete(emp.id)">X</button>
-    </li>
-  </ul>
-  <button (click)="onSave()">Save</button>
-  <!--<table class="table table-hover">
-    <thead>
-      <tr>
-        <th>Перечень заказа</th>
-      </tr>
-      <th>Название</th>
-      <th>Цена</th>
-      <th>кол-во</th>
-      <th>Дисконт</th>
-      <th>Del</th>
-    </thead>
-    <tbody>
-      <tr *ngFor="let emp of selectedMenu">
-        <td (click)="openDialog(emp)">{{emp.name}}</td>
-        <td (click)="openDialog(emp)">{{emp.price}}</td>
-        <td (click)="openDialog(emp)">{{emp.qty}}</td>
-        <td (click)="openDialog(emp)">{{emp.discount}}</td>
-        <td><button class="btn text-danger" (click)="onDelete(emp.id)">X</button></td>
-      </tr>
-    </tbody>
-  </table>
-  <button (click)="onSave()">Save</button>-->
-  <!--<button (click)="getOrder()">getOrder</button>-->
+<div id="print-section">
+  <div *ngIf="orderId || selectedMenu?.length">
+    <ul class="heroes">
+      <li *ngFor="let emp of selectedMenu" (click)="openDialog(emp)">
+        {{emp.name}} {{emp.price}} {{emp.qty}} {{emp.discount}}
+          <button mat-mini-fab (click)="onDelete(emp.id)">X</button>
+      </li>
+    </ul>
+    <button (click)="onSave()">Save</button>
+    <!--<table class="table table-hover">
+      <thead>
+        <tr>
+          <th>Перечень заказа</th>
+        </tr>
+        <th>Название</th>
+        <th>Цена</th>
+        <th>кол-во</th>
+        <th>Дисконт</th>
+        <th>Del</th>
+      </thead>
+      <tbody>
+        <tr *ngFor="let emp of selectedMenu">
+          <td (click)="openDialog(emp)">{{emp.name}}</td>
+          <td (click)="openDialog(emp)">{{emp.price}}</td>
+          <td (click)="openDialog(emp)">{{emp.qty}}</td>
+          <td (click)="openDialog(emp)">{{emp.discount}}</td>
+          <td><button class="btn text-danger" (click)="onDelete(emp.id)">X</button></td>
+        </tr>
+      </tbody>
+    </table>
+    <button (click)="onSave()">Save</button>-->
+    <!--<button (click)="getOrder()">getOrder</button>-->
+  </div>
 </div>
+<button (click)="print()">print</button>
 
 <mat-form-field>
     <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Поиск">
@@ -93,3 +96,5 @@
   <tr mat-row *matRowDef="let row; columns: displayedColumns;">
   </tr>
 </table>
+
+

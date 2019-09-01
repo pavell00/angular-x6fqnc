@@ -1,0 +1,56 @@
+[
+    {
+        "id": "1",
+        "langRUS":  "мир",
+        "langENG":  "peace",
+        "langESP":  "el mundo",
+        "unit":  0,
+        "rating":  0,
+        "theme":  "общее"
+    },
+    {
+        "id": "2",
+        "langRUS":  "позавчера",
+        "langENG":  "the day before yesterday",
+        "langESP":  "anteayer",
+        "unit":  0,
+        "rating":  1,
+        "theme":  "время/день"
+    },
+	{
+        "id": "3",
+        "langRUS":  "послезавтра",
+        "langENG":  "the day after tomorrow",
+        "langESP":  "pasado mañana",
+        "unit":  2,
+        "rating":  2,
+        "theme":  "время/день"
+    },
+	{
+        "id": "4",
+        "langRUS":  "бабушка",
+        "langENG":  "grandmother",
+        "langESP":  "abuela",
+        "unit":  2,
+        "rating":  2,
+        "theme":  "семья"
+    },
+	{
+        "id": "5",
+        "langRUS":  "дедушка",
+        "langENG":  "grandfather",
+        "langESP":  "abuelo",
+        "unit":  2,
+        "rating":  2,
+        "theme":  "семья"
+    },
+	{
+        "id": "6",
+        "langRUS":  "солнце",
+        "langENG":  "the sun",
+        "langESP":  "el sol",
+        "unit":  2,
+        "rating":  2,
+        "theme":  "общее"
+    }
+]

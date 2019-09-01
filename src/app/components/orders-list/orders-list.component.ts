@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, NavigationExtras } from '@angular/router';
+//import * as copy from 'copy-to-clipboard';
 import copy from 'copy-to-clipboard';
 import { Order } from '../../models/order';
 import { menuItem } from '../../models/menuItem';
@@ -23,7 +24,8 @@ export class OrderListComponent implements OnInit {
   maxLength: number;
   maxLengthFoodName: number;
 
-  constructor(private dataService: DataService, private router : Router,private firestore: AngularFirestore, private toastr:ToastrService) { }
+  constructor(private dataService: DataService, private router : Router,private firestore: AngularFirestore, 
+    private toastr:ToastrService) { }
 
   ngOnInit(): void {
     this.displayedColumns = ['TableNo','OrderDate','sumOrder','discountOrder','Actions'];

@@ -27,7 +27,7 @@ export class DataService {
   }
 
   getParams() {
-    return this.firestore.collection('prgparams').doc('1');
+    return this.firestore.collection('prgparams').doc('2');
   }
 
   getSubCollection(id: string) {

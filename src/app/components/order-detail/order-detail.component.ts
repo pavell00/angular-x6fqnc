@@ -111,7 +111,7 @@ export class OrderDetailComponent implements OnInit, AfterContentInit {
       }
     )
     this.orderSum = ssum;
-    this.orderDiscountSum = Math.round(this.orderSum * Math.round(this.orderDiscount /100.0));
+    this.orderDiscountSum = Math.round(this.orderSum * (this.orderDiscount /100.0));
     this.orderSumToPay = (this.orderSum - this.orderDiscountSum + this.orderSumService) * 1;
   }
 

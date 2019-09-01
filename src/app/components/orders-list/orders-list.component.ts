@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, NavigationExtras } from '@angular/router';
-//import * as copy from 'copy-to-clipboard';
-import copy from 'copy-to-clipboard';
+import * as copy from 'copy-to-clipboard';
+//import copy from 'copy-to-clipboard';
 import { Order } from '../../models/order';
 import { menuItem } from '../../models/menuItem';
 import { DataService } from '../../services/data.service';
@@ -94,30 +94,35 @@ export class OrderListComponent implements OnInit {
         this.header  = param.data().headerStr1+'\n';
         this.header += param.data().headerStr2+'\n';
         this.header += param.data().headerStr3+'\n';
-        this.header += '\n';
-        this.header += '\n';
+        this.header += param.data().headerStr4+'\n';
+        this.header += param.data().headerStr5+'\n';
+        this.header += param.data().headerStr6+'\n';
+        this.header += param.data().headerStr7+'\n';
+        this.header += param.data().headerStr8+'\n';
+        //this.header += '\n';
+        //this.header += '\n';
         this.dataService.getOrder(id).get().toPromise().then(
           order => {//console.log("document data:", doc1.data())
             //4-th check's line
-            let check: string = order.data().check.toString();
-            let TableNo: string = order.data().TableNo;
-            let guests: string = order.data().guests.toString();
-            this.strLine4 = param.data().headerStr4+this.addSpace(check, 8, 'af')+'Стол # '+this.addSpace(TableNo, 12, 'af') + 'Гостей '+this.addSpace(guests, 2, 'pr')+'\n';
+            //let check: string = order.data().check.toString();
+            //let TableNo: string = order.data().TableNo;
+            //let guests: string = order.data().guests.toString();
+            //this.strLine4 = param.data().headerStr4+this.addSpace(check, 8, 'af')+'Стол # '+this.addSpace(TableNo, 12, 'af') + 'Гостей '+this.addSpace(guests, 2, 'pr')+'\n';
             //5-th check's line
-            let orderDate: string
-            let str: string = order.data().OrderDate;
-            orderDate = str.slice(0, 5)+'.'+str.slice(8, 10);
-            let orderTime: string = order.data().OrderDate;
-            orderTime = orderTime.slice(12);
-            this.strLine5 = orderDate +'      Открыт '+orderTime+'    Печать '+order.data().printTime+'\n';
+            //let orderDate: string
+            //let str: string = order.data().OrderDate;
+            //orderDate = str.slice(0, 5)+'.'+str.slice(8, 10);
+            //let orderTime: string = order.data().OrderDate;
+            //orderTime = orderTime.slice(12);
+            //this.strLine5 = orderDate +'      Открыт '+orderTime+'    Печать '+order.data().printTime+'\n';
             //console.log(this.strLine4, this.strLine5)
-            this.header += this.strLine4;
-            this.header += this.strLine5;
-            this.header += param.data().headerStr6+'\n';
-            this.header += param.data().headerStr7+'\n';
-            this.header += '\n';
+            //this.header += this.strLine4;
+            //this.header += this.strLine5;
+            //this.header += param.data().headerStr6+'\n';
+            //this.header += param.data().headerStr7+'\n';
+            //this.header += '\n';
             this.header += param.data().tableHeader1+'\n';
-            this.header += param.data().lineStr+'\n';
+            //this.header += param.data().lineStr+'\n';
             //end of check's header 
 
             let arrOrderDetails: menuItem[] = [];
@@ -156,16 +161,17 @@ export class OrderListComponent implements OnInit {
 
                   }
                 )
-                this.header += param.data().lineStr+'\n';
+                //this.header += param.data().lineStr+'\n';
                 this.header += param.data().totalStr+'\n';
-                this.header += param.data().lineStr+'\n';
-                this.header += param.data().discountStr+'\n';
-                this.header += param.data().lineStr+'\n';
-                this.header += param.data().totalToPay+'\n';
-                this.header += param.data().grivnaStr+'\n';
-                this.header += param.data().lineStr+'\n';
+                //this.header += param.data().lineStr+'\n';
+                //this.header += param.data().discountStr+'\n';
+                //this.header += param.data().lineStr+'\n';
+                //this.header += param.data().totalToPay+'\n';
+                //this.header += param.data().grivnaStr+'\n';
+                //this.header += param.data().lineStr+'\n';
                 this.header += param.data().footerStr+'\n';
                 this.header += param.data().footerStr1+'\n';
+                this.header += param.data().footerStr2+'\n';
                 copy(this.header) // copy check's data to clipboard
               });
           }
@@ -177,14 +183,16 @@ export class OrderListComponent implements OnInit {
   buildLine(item: menuItem, itemName: string): string {
     let Sqty: number = item.qty * 1.0; //default value;
     let space_qty: string = '   ';
-    let space_sum: string = '       ';
+    let space_sum: string = '     ';
     if (item.qty >= 10 && item.qty <= 99) {space_qty = '  '}
     if (item.qty > 99) {space_qty = ' '};
     let qty = Sqty.toFixed(2);
     let sSum: number = (item.qty * item.price);
     let sum = sSum.toFixed(2);
-    if (sSum >= 10 && item.qty <= 99) {space_sum = '      '}
-    if (sSum >= 100) {space_sum = '     '}
+    if (sSum >= 10 && item.qty <= 99) {space_sum = '   '}
+    if (sSum >= 100 && sSum < 1000) {space_sum = '  '}
+    if (sSum >= 1000 && sSum < 10000) {space_sum = ' '}
+    if (sSum >= 10000) {space_sum = ''}
     return this.addSpace(itemName, this.maxLengthFoodName, 'af')+space_qty + qty + space_sum + sum+'\n';
   }
 

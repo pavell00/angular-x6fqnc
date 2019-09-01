@@ -145,14 +145,17 @@ export class OrderListComponent implements OnInit {
                             partNameToOut += element+' ';
                           } else {
                             //console.log(partNameToOut)
-                            if (isFirstPartOfName) {this.header += this.buildLine(item, partNameToOut)}
+                            //if (isFirstPartOfName) {this.header += this.buildLine(item, partNameToOut)}
+                            if (isFirstPartOfName) {this.header += partNameToOut+'\n';}
                             if (!isFirstPartOfName) {this.header += partNameToOut+'\n';}
                             // console.log(element)
                             partNameToOut = element + ' ';
                             isFirstPartOfName = false;
                           }
                           // execute last item logic to output splitted words by blocks
-                          if (Object.is(arr.length - 1, index)) { this.header += partNameToOut+'\n'; }
+                          if (Object.is(arr.length - 1, index)) {
+                            this.header += this.buildLine(item, partNameToOut); 
+                          }
                         }
                       )
                     } else { // if name of food not to split
@@ -183,7 +186,7 @@ export class OrderListComponent implements OnInit {
   buildLine(item: menuItem, itemName: string): string {
     let Sqty: number = item.qty * 1.0; //default value;
     let space_qty: string = '   ';
-    let space_sum: string = '     ';
+    let space_sum: string = '    ';
     if (item.qty >= 10 && item.qty <= 99) {space_qty = '  '}
     if (item.qty > 99) {space_qty = ' '};
     let qty = Sqty.toFixed(2);
